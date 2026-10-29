@@ -35,7 +35,7 @@ python3 -m http.server 8080
 # or, if the project scripts are installed: npm run serve
 ```
 
-There is nothing to install or build. `package.json` exists only for the development scripts.
+The site has nothing to install or build. `package.json` exists for the development scripts; `npm ci` is only needed for the deployed-site smoke test.
 
 ## Reports
 
@@ -63,7 +63,7 @@ npm test
 node --test tests/*.test.js
 ```
 
-Node 20+ recommended. The suite has no dependencies and runs the engine and solver directly, outside the browser. It covers:
+Node 20+ recommended. The unit suite has no dependencies and runs the engine and solver directly, outside the browser. It covers:
 
 - bucket mapping, soft/hard evaluation, and every hand transition the solver relies on;
 - exact infinite-deck dealer distributions, normalization, naturals, bust rates, and peek conditioning;
@@ -71,6 +71,18 @@ Node 20+ recommended. The suite has no dependencies and runs the engine and solv
 - the house edge (0.5117% for the default infinite-deck rules) and the direction/magnitude of rule changes;
 - the exact four H17 strategy flips and the rule-diff output;
 - deterministic headless play sessions, chosen-action expected net, bet-size weighting, and insurance grading.
+
+### Deployed-site smoke test
+
+The Pages workflow runs this automatically after every deployment. To run it manually against the live site:
+
+```bash
+npm ci
+npx playwright install chromium
+SMOKE_URL=https://slayyyyer.github.io/blackjack/ npm run test:smoke
+```
+
+The test opens the Play tab, deals until a real decision is available, checks the table, cards, and all five action buttons, then stands and verifies the hand is added to the history. It exits non-zero if any of those fail to render.
 
 ## What is in each tab
 
