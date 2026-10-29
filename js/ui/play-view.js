@@ -625,7 +625,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
     if (decision.correct) {
       return `<span class="grade-ok">Optimal: ${decision.bestName}${decision.bestEV == null ? '' : ` (${formatEV(decision.bestEV)} EV)`}.</span>`;
     }
-    return `<span class="grade-miss">${decision.actionName} cost ${decision.evLost == null ? '—' : `${decision.evLost.toFixed(3)} bets`}.</span><span class="coach-value">Best ${decision.bestName}${decision.bestEV == null ? '' : ` (${formatEV(decision.bestEV)})`}; you ${decision.actionName}${decision.actionEV == null ? '' : ` (${formatEV(decision.actionEV)})`}.</span>`;
+    return `<span class="grade-miss">${decision.actionName} cost ${decision.evLost == null ? '—' : `${decision.evLost.toFixed(3)} bets`}.</span> <span class="coach-value">Best ${decision.bestName}${decision.bestEV == null ? '' : ` (${formatEV(decision.bestEV)})`}; you ${decision.actionName}${decision.actionEV == null ? '' : ` (${formatEV(decision.actionEV)})`}.</span>`;
   }
 
   async function gradeDecision(snapshot, action, seq) {
