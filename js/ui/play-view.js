@@ -112,9 +112,9 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   root.innerHTML = `
     <div class="module-head play-head">
       <div>
-        <p class="eyebrow">Module 05 · play mode</p>
-        <h1>Sit down. Get graded.</h1>
-        <p class="lede">A real shoe, a cut card, and a coach that prices every decision in bets. The table keeps the count honest; you decide whether to look.</p>
+        <p class="eyebrow">Blackjack · the table</p>
+        <h1>Sit down. Play.</h1>
+        <p class="lede">A real six-deck shoe with a cut card, doubles, splits, insurance, and dealer blackjack checks. The coach will grade your decisions if you leave it on.</p>
       </div>
       <div class="play-bankroll">
         <span class="stat-label">Bankroll</span>
