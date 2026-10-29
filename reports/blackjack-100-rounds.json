@@ -1,0 +1,6934 @@
+{
+  "title": "100 Hands Against the House",
+  "generatedAt": "2026-10-29T17:44:26.420Z",
+  "commit": "6e0fc28",
+  "seed": 20261029,
+  "referenceSeed": 8675309,
+  "rules": {
+    "decks": 6,
+    "dealerHitsSoft17": false,
+    "blackjackPayout": 1.5,
+    "doubleAnyTwo": true,
+    "doubleAfterSplit": true,
+    "splitAcesOneCard": true,
+    "resplitAces": false,
+    "resplitLimit": 4,
+    "surrender": "none",
+    "peek": true,
+    "insurance": true
+  },
+  "ruleSummary": [
+    "6 decks",
+    "S17",
+    "3:2",
+    "Double any 2",
+    "DAS",
+    "3 resplits",
+    "No surrender",
+    "US peek",
+    "Insurance"
+  ],
+  "chartHouseEdge": 0.4256117525189681,
+  "startBankroll": 200,
+  "endBankroll": 200,
+  "net": 0,
+  "stats": {
+    "rounds": 100,
+    "hands": 104,
+    "decisions": 114,
+    "correct": 114,
+    "evLost": 0,
+    "actualNet": 0,
+    "expectedNet": -1.2122328059921896,
+    "expectedActualNet": -6,
+    "expectedCount": 85,
+    "wins": 39,
+    "losses": 42,
+    "pushes": 19,
+    "accuracy": 1,
+    "luck": -4.78776719400781
+  },
+  "exactExpectedLoss": 0.4256117525189681,
+  "sessionSd": 11.52845385307376,
+  "luckVsExact": 0.4256117525189681,
+  "reference": {
+    "rounds": 100000,
+    "wins": 0.43246,
+    "losses": 0.47547,
+    "pushes": 0.09207,
+    "sd": 1.152845385307376
+  },
+  "actionCounts": {
+    "H": 49,
+    "S": 63,
+    "I": 6,
+    "D": 10,
+    "P": 4
+  },
+  "insuranceOffers": 6,
+  "insuranceTaken": 1,
+  "gradedActions": 114,
+  "gradedRounds": 85,
+  "gradedExpected": -1.2122328059921896,
+  "gradedActual": -6,
+  "otherActual": 6,
+  "naturals": 4,
+  "dealerBlackjacks": 4,
+  "doubles": 10,
+  "splits": 4,
+  "playerBusts": 15,
+  "dealerBusts": 24,
+  "handCount": 104,
+  "high": 207,
+  "highAt": 17,
+  "low": 198,
+  "lowAt": 94,
+  "bestWinStreak": 4,
+  "bestLossStreak": 5,
+  "bestPushStreak": 2,
+  "pushZ": 3.3871193487446045,
+  "playerTotals": {
+    "17": 13,
+    "18": 10,
+    "19": 11,
+    "20": 18,
+    "21": 6,
+    "Bust": 15,
+    "≤16": 23
+  },
+  "dealerTotals": {
+    "17": 7,
+    "18": 23,
+    "19": 12,
+    "20": 21,
+    "21": 5,
+    "Bust": 24
+  },
+  "rounds": [
+    {
+      "id": 1,
+      "bet": 1,
+      "net": 1.5,
+      "note": "Natural blackjack.",
+      "expectedEV": null,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "h"
+            },
+            {
+              "rank": "A",
+              "suit": "d"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": true,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 2,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.4252542076446529,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "d"
+          },
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          }
+        ],
+        "total": 26,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "d"
+            },
+            {
+              "rank": "3",
+              "suit": "c"
+            },
+            {
+              "rank": "9",
+              "suit": "d"
+            }
+          ],
+          "total": 22,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.27157480502428616,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "4",
+            "suit": "h"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          }
+        ],
+        "total": 22,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "h"
+            },
+            {
+              "rank": "K",
+              "suit": "c"
+            },
+            {
+              "rank": "2",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.04494137556492457,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "d"
+          },
+          {
+            "rank": "6",
+            "suit": "d"
+          },
+          {
+            "rank": "8",
+            "suit": "d"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "d"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": null,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "d"
+          },
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "3",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "s"
+            },
+            {
+              "rank": "Q",
+              "suit": "d"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.4252542076446529,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "h"
+            },
+            {
+              "rank": "J",
+              "suit": "h"
+            },
+            {
+              "rank": "8",
+              "suit": "d"
+            }
+          ],
+          "total": 21,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.41678201408103377,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "d"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          }
+        ],
+        "total": 22,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "h"
+            },
+            {
+              "rank": "10",
+              "suit": "s"
+            },
+            {
+              "rank": "7",
+              "suit": "d"
+            }
+          ],
+          "total": 22,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "10",
+            "suit": "d"
+          }
+        ],
+        "total": 26,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "h"
+            },
+            {
+              "rank": "9",
+              "suit": "c"
+            }
+          ],
+          "total": 14,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "h"
+          },
+          {
+            "rank": "9",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "h"
+            },
+            {
+              "rank": "2",
+              "suit": "h"
+            }
+          ],
+          "total": 12,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 17.",
+      "expectedEV": null,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "s"
+            },
+            {
+              "rank": "8",
+              "suit": "s"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.4043629365977602,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "d"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          },
+          {
+            "rank": "5",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "d"
+            },
+            {
+              "rank": "8",
+              "suit": "d"
+            }
+          ],
+          "total": 19,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "s"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          }
+        ],
+        "total": 22,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            }
+          ],
+          "total": 16,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.19702881057416358,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "c"
+          },
+          {
+            "rank": "9",
+            "suit": "s"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "c"
+            },
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "9",
+              "suit": "d"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": false,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "No insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 17.",
+      "expectedEV": -0.38104299284808774,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "s"
+          },
+          {
+            "rank": "7",
+            "suit": "s"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "c"
+            },
+            {
+              "rank": "4",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.6703596906328,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "d"
+          },
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "d"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "c"
+            },
+            {
+              "rank": "J",
+              "suit": "c"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer busts.",
+      "expectedEV": 0.46094024379435383,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          },
+          {
+            "rank": "K",
+            "suit": "h"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "c"
+            },
+            {
+              "rank": "8",
+              "suit": "c"
+            },
+            {
+              "rank": "9",
+              "suit": "h"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "bet": 1,
+      "net": 1.5,
+      "note": "Natural blackjack.",
+      "expectedEV": null,
+      "bankroll": 207,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "J",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "h"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": true,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 18,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 21.",
+      "expectedEV": -0.21106310899491443,
+      "bankroll": 206,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "K",
+            "suit": "s"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "9",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "h"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer blackjack.",
+      "expectedEV": null,
+      "bankroll": 205,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": true
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "d"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 20,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 19.",
+      "expectedEV": null,
+      "bankroll": 205,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "d"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "s"
+            },
+            {
+              "rank": "9",
+              "suit": "c"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.21724188132078473,
+      "bankroll": 204,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "h"
+            },
+            {
+              "rank": "3",
+              "suit": "d"
+            },
+            {
+              "rank": "Q",
+              "suit": "c"
+            },
+            {
+              "rank": "8",
+              "suit": "s"
+            }
+          ],
+          "total": 24,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.34001328060893565,
+      "bankroll": 203,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "2",
+            "suit": "s"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "4",
+              "suit": "d"
+            },
+            {
+              "rank": "8",
+              "suit": "s"
+            },
+            {
+              "rank": "Q",
+              "suit": "d"
+            }
+          ],
+          "total": 22,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.17968872741114622,
+      "bankroll": 203,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "s"
+          },
+          {
+            "rank": "8",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "4",
+              "suit": "d"
+            }
+          ],
+          "total": 15,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        },
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "d"
+            },
+            {
+              "rank": "K",
+              "suit": "s"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "P",
+          "action": "split",
+          "name": "Split",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer blackjack.",
+      "expectedEV": null,
+      "bankroll": 202,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "s"
+          },
+          {
+            "rank": "A",
+            "suit": "c"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": true
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "s"
+            },
+            {
+              "rank": "8",
+              "suit": "h"
+            }
+          ],
+          "total": 13,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 25,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 203,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "10",
+            "suit": "s"
+          },
+          {
+            "rank": "K",
+            "suit": "d"
+          }
+        ],
+        "total": 26,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "s"
+            },
+            {
+              "rank": "5",
+              "suit": "d"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.21106310899491443,
+      "bankroll": 204,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "J",
+            "suit": "c"
+          },
+          {
+            "rank": "K",
+            "suit": "h"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "d"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            }
+          ],
+          "total": 16,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "bet": 1,
+      "net": -2,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.055095284479298484,
+      "bankroll": 202,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "s"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "6",
+              "suit": "c"
+            },
+            {
+              "rank": "A",
+              "suit": "c"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            }
+          ],
+          "total": 12,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.32360517609398,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "d"
+          },
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "c"
+            },
+            {
+              "rank": "3",
+              "suit": "c"
+            },
+            {
+              "rank": "10",
+              "suit": "d"
+            }
+          ],
+          "total": 23,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.639986575216839,
+      "bankroll": 202,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "9",
+            "suit": "s"
+          },
+          {
+            "rank": "9",
+            "suit": "h"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "h"
+            },
+            {
+              "rank": "K",
+              "suit": "d"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.092935491769284,
+      "bankroll": 203,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "2",
+            "suit": "h"
+          },
+          {
+            "rank": "9",
+            "suit": "s"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "5",
+            "suit": "h"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "c"
+            },
+            {
+              "rank": "A",
+              "suit": "c"
+            },
+            {
+              "rank": "8",
+              "suit": "c"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            }
+          ],
+          "total": 21,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": false,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "No insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 21.",
+      "expectedEV": -0.04494137556492457,
+      "bankroll": 202,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "c"
+          },
+          {
+            "rank": "K",
+            "suit": "d"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "d"
+            },
+            {
+              "rank": "7",
+              "suit": "d"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.10729107800860832,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "d"
+          },
+          {
+            "rank": "K",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "c"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "c"
+            },
+            {
+              "rank": "4",
+              "suit": "s"
+            },
+            {
+              "rank": "9",
+              "suit": "h"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 21.",
+      "expectedEV": 0.09837621743539254,
+      "bankroll": 200,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "s"
+            },
+            {
+              "rank": "2",
+              "suit": "d"
+            },
+            {
+              "rank": "4",
+              "suit": "c"
+            },
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "4",
+              "suit": "s"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.011739160673341825,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "d"
+          },
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "s"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer blackjack.",
+      "expectedEV": 0.012499999999999956,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "h"
+          },
+          {
+            "rank": "10",
+            "suit": "h"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": true
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "c"
+            },
+            {
+              "rank": "2",
+              "suit": "h"
+            }
+          ],
+          "total": 10,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": true,
+        "bet": 0.5
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "Take insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.470640923339469,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "10",
+            "suit": "s"
+          },
+          {
+            "rank": "2",
+            "suit": "s"
+          },
+          {
+            "rank": "4",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "c"
+            },
+            {
+              "rank": "4",
+              "suit": "h"
+            },
+            {
+              "rank": "7",
+              "suit": "s"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.37191909208726714,
+      "bankroll": 200,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "10",
+            "suit": "h"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "c"
+            },
+            {
+              "rank": "10",
+              "suit": "h"
+            }
+          ],
+          "total": 24,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "bet": 1,
+      "net": 1.5,
+      "note": "Natural blackjack.",
+      "expectedEV": null,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "s"
+          },
+          {
+            "rank": "J",
+            "suit": "h"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "Q",
+              "suit": "d"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": true,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 39,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer blackjack.",
+      "expectedEV": null,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "d"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": true
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "4",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            }
+          ],
+          "total": 10,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 40,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.6502720942514815,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "c"
+          },
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "10",
+            "suit": "h"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "d"
+            },
+            {
+              "rank": "J",
+              "suit": "d"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "7",
+            "suit": "s"
+          }
+        ],
+        "total": 22,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "d"
+            },
+            {
+              "rank": "9",
+              "suit": "c"
+            }
+          ],
+          "total": 14,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.5545375664681712,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "K",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "s"
+            },
+            {
+              "rank": "Q",
+              "suit": "c"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 21.",
+      "expectedEV": -0.37191909208726714,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "9",
+            "suit": "c"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "h"
+            },
+            {
+              "rank": "4",
+              "suit": "d"
+            },
+            {
+              "rank": "Q",
+              "suit": "c"
+            }
+          ],
+          "total": 24,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": null,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "d"
+          },
+          {
+            "rank": "K",
+            "suit": "h"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "h"
+            },
+            {
+              "rank": "8",
+              "suit": "c"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.5398263462810869,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "s"
+          },
+          {
+            "rank": "10",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "d"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            },
+            {
+              "rank": "10",
+              "suit": "d"
+            }
+          ],
+          "total": 26,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.21106310899491443,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 13,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.24937508055334262,
+      "bankroll": 198.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "d"
+          },
+          {
+            "rank": "K",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "6",
+              "suit": "d"
+            },
+            {
+              "rank": "2",
+              "suit": "d"
+            },
+            {
+              "rank": "J",
+              "suit": "c"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 17.",
+      "expectedEV": null,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "2",
+            "suit": "h"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "9",
+              "suit": "c"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 17.",
+      "expectedEV": -0.08057337314531618,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "9",
+            "suit": "c"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "d"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 198.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "d"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "c"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 13,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.27157480502428616,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "c"
+            },
+            {
+              "rank": "9",
+              "suit": "h"
+            },
+            {
+              "rank": "9",
+              "suit": "s"
+            }
+          ],
+          "total": 21,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.773227226537175,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "d"
+            },
+            {
+              "rank": "10",
+              "suit": "h"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.5398263462810869,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "c"
+          },
+          {
+            "rank": "3",
+            "suit": "d"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "9",
+              "suit": "s"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            },
+            {
+              "rank": "4",
+              "suit": "s"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.32360517609398,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "d"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "h"
+            },
+            {
+              "rank": "3",
+              "suit": "d"
+            },
+            {
+              "rank": "Q",
+              "suit": "c"
+            }
+          ],
+          "total": 23,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer stands on 19.",
+      "expectedEV": 0.17968872741114622,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "c"
+          },
+          {
+            "rank": "9",
+            "suit": "d"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "s"
+            },
+            {
+              "rank": "4",
+              "suit": "d"
+            },
+            {
+              "rank": "9",
+              "suit": "c"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.2522502292357135,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "h"
+          },
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "4",
+            "suit": "h"
+          },
+          {
+            "rank": "8",
+            "suit": "c"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "s"
+            },
+            {
+              "rank": "6",
+              "suit": "s"
+            }
+          ],
+          "total": 16,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 19.",
+      "expectedEV": 0.013277219463208494,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "c"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "3",
+              "suit": "h"
+            },
+            {
+              "rank": "Q",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": null,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "d"
+          },
+          {
+            "rank": "8",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "d"
+            },
+            {
+              "rank": "10",
+              "suit": "d"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer busts.",
+      "expectedEV": 0.35893941244229927,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "s"
+          },
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "9",
+            "suit": "h"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            },
+            {
+              "rank": "K",
+              "suit": "h"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.6554703231499026,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "9",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "h"
+            },
+            {
+              "rank": "Q",
+              "suit": "s"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": false,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "No insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.39693031612293145,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "s"
+          },
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "9",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "c"
+            },
+            {
+              "rank": "K",
+              "suit": "c"
+            }
+          ],
+          "total": 23,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": false,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "No insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer busts.",
+      "expectedEV": 0.006958050045595625,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "10",
+            "suit": "s"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "d"
+            },
+            {
+              "rank": "10",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "c"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        },
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "s"
+            },
+            {
+              "rank": "K",
+              "suit": "h"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "P",
+          "action": "split",
+          "name": "Split",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "bet": 1,
+      "net": -2,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.05842651874374477,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "s"
+          },
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "h"
+            },
+            {
+              "rank": "10",
+              "suit": "c"
+            }
+          ],
+          "total": 16,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.5398263462810869,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "10",
+            "suit": "h"
+          },
+          {
+            "rank": "8",
+            "suit": "d"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "c"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            },
+            {
+              "rank": "2",
+              "suit": "d"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.5545375664681712,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "d"
+          },
+          {
+            "rank": "Q",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "s"
+            },
+            {
+              "rank": "10",
+              "suit": "d"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 21.",
+      "expectedEV": 0.5545375664681712,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "s"
+          }
+        ],
+        "total": 21,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "d"
+            },
+            {
+              "rank": "9",
+              "suit": "h"
+            }
+          ],
+          "total": 20,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer busts.",
+      "expectedEV": 0.28663571688628375,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "s"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "4",
+              "suit": "s"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            },
+            {
+              "rank": "2",
+              "suit": "h"
+            }
+          ],
+          "total": 12,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.2927837272092773,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "s"
+          },
+          {
+            "rank": "A",
+            "suit": "d"
+          },
+          {
+            "rank": "6",
+            "suit": "s"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "d"
+            },
+            {
+              "rank": "6",
+              "suit": "s"
+            }
+          ],
+          "total": 14,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.2927837272092773,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "A",
+            "suit": "c"
+          },
+          {
+            "rank": "2",
+            "suit": "d"
+          },
+          {
+            "rank": "Q",
+            "suit": "c"
+          },
+          {
+            "rank": "5",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "h"
+            },
+            {
+              "rank": "6",
+              "suit": "d"
+            }
+          ],
+          "total": 16,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.773227226537175,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          }
+        ],
+        "total": 25,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "h"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.37191909208726714,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "s"
+          },
+          {
+            "rank": "7",
+            "suit": "d"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          }
+        ],
+        "total": 22,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "d"
+            },
+            {
+              "rank": "4",
+              "suit": "c"
+            },
+            {
+              "rank": "A",
+              "suit": "s"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            }
+          ],
+          "total": 22,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.2875967570675814,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "9",
+            "suit": "h"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "8",
+              "suit": "s"
+            },
+            {
+              "rank": "A",
+              "suit": "c"
+            }
+          ],
+          "total": 19,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.5044283729180936,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "h"
+          },
+          {
+            "rank": "J",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            },
+            {
+              "rank": "2",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.4715776885925042,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "9",
+            "suit": "d"
+          },
+          {
+            "rank": "10",
+            "suit": "c"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            },
+            {
+              "rank": "Q",
+              "suit": "s"
+            }
+          ],
+          "total": 25,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.6610499619480718,
+      "bankroll": 201.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "s"
+          },
+          {
+            "rank": "6",
+            "suit": "d"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "h"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "bet": 1,
+      "net": 2,
+      "note": "Dealer busts.",
+      "expectedEV": 0.6146990179090278,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "10",
+            "suit": "d"
+          },
+          {
+            "rank": "10",
+            "suit": "s"
+          }
+        ],
+        "total": 25,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "10",
+              "suit": "h"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        },
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "c"
+            },
+            {
+              "rank": "3",
+              "suit": "c"
+            }
+          ],
+          "total": 14,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "P",
+          "action": "split",
+          "name": "Split",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.10247714687203513,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "h"
+          },
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "2",
+            "suit": "h"
+          },
+          {
+            "rank": "2",
+            "suit": "h"
+          },
+          {
+            "rank": "10",
+            "suit": "h"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "h"
+            },
+            {
+              "rank": "A",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 13,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": null,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "h"
+          },
+          {
+            "rank": "7",
+            "suit": "c"
+          },
+          {
+            "rank": "10",
+            "suit": "s"
+          }
+        ],
+        "total": 25,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "h"
+            },
+            {
+              "rank": "8",
+              "suit": "s"
+            }
+          ],
+          "total": 18,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.17186785993695264,
+      "bankroll": 206.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "A",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "c"
+            },
+            {
+              "rank": "4",
+              "suit": "s"
+            },
+            {
+              "rank": "2",
+              "suit": "d"
+            },
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "7",
+              "suit": "h"
+            }
+          ],
+          "total": 21,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 17.",
+      "expectedEV": -0.16719266083547535,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "A",
+            "suit": "c"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "h"
+            },
+            {
+              "rank": "3",
+              "suit": "d"
+            }
+          ],
+          "total": 13,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.15369901583000453,
+      "bankroll": 206.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "J",
+            "suit": "d"
+          },
+          {
+            "rank": "Q",
+            "suit": "s"
+          }
+        ],
+        "total": 26,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "h"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.32360517609398,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "Q",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "K",
+              "suit": "c"
+            },
+            {
+              "rank": "3",
+              "suit": "s"
+            },
+            {
+              "rank": "9",
+              "suit": "d"
+            }
+          ],
+          "total": 22,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": -0.3212819579256434,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "h"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "d"
+            },
+            {
+              "rank": "4",
+              "suit": "h"
+            },
+            {
+              "rank": "J",
+              "suit": "h"
+            }
+          ],
+          "total": 24,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 19.",
+      "expectedEV": 0.7918151595518985,
+      "bankroll": 205.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "8",
+            "suit": "c"
+          },
+          {
+            "rank": "7",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "s"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "s"
+            },
+            {
+              "rank": "J",
+              "suit": "s"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.3190547913983386,
+      "bankroll": 204.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "d"
+          },
+          {
+            "rank": "J",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "3",
+              "suit": "d"
+            },
+            {
+              "rank": "4",
+              "suit": "h"
+            },
+            {
+              "rank": "2",
+              "suit": "c"
+            },
+            {
+              "rank": "5",
+              "suit": "d"
+            },
+            {
+              "rank": "A",
+              "suit": "h"
+            },
+            {
+              "rank": "2",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.41972063392881986,
+      "bankroll": 203.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "h"
+          },
+          {
+            "rank": "10",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "J",
+              "suit": "h"
+            },
+            {
+              "rank": "7",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.4231542396452175,
+      "bankroll": 202.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "9",
+            "suit": "h"
+          },
+          {
+            "rank": "6",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "h"
+            },
+            {
+              "rank": "K",
+              "suit": "s"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "bet": 1,
+      "net": -2,
+      "note": "Dealer stands on 18.",
+      "expectedEV": 0.04984423250655525,
+      "bankroll": 200.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "8",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "c"
+            },
+            {
+              "rank": "J",
+              "suit": "c"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        },
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "s"
+            },
+            {
+              "rank": "K",
+              "suit": "d"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "P",
+          "action": "split",
+          "name": "Split",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 20.",
+      "expectedEV": -0.38104299284808774,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "d"
+          },
+          {
+            "rank": "Q",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "2",
+              "suit": "h"
+            },
+            {
+              "rank": "Q",
+              "suit": "s"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            }
+          ],
+          "total": 17,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.5545375664681712,
+      "bankroll": 199.5,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "Q",
+            "suit": "h"
+          },
+          {
+            "rank": "Q",
+            "suit": "c"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "10",
+              "suit": "s"
+            },
+            {
+              "rank": "K",
+              "suit": "d"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "bet": 1,
+      "net": 1.5,
+      "note": "Natural blackjack.",
+      "expectedEV": null,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "4",
+            "suit": "c"
+          },
+          {
+            "rank": "K",
+            "suit": "c"
+          }
+        ],
+        "total": 14,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "c"
+            },
+            {
+              "rank": "K",
+              "suit": "c"
+            }
+          ],
+          "total": 21,
+          "soft": true,
+          "bust": false,
+          "natural": true,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": []
+    },
+    {
+      "id": 92,
+      "bet": 1,
+      "net": -2,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.40932067017593937,
+      "bankroll": 199,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "d"
+          },
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "5",
+              "suit": "c"
+            },
+            {
+              "rank": "5",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "h"
+            }
+          ],
+          "total": 15,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": -0.4663074785271777,
+      "bankroll": 200,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "h"
+          },
+          {
+            "rank": "3",
+            "suit": "h"
+          },
+          {
+            "rank": "K",
+            "suit": "s"
+          }
+        ],
+        "total": 23,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "4",
+              "suit": "s"
+            },
+            {
+              "rank": "10",
+              "suit": "h"
+            },
+            {
+              "rank": "5",
+              "suit": "s"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 94,
+      "bet": 1,
+      "net": -2,
+      "note": "Dealer stands on 17.",
+      "expectedEV": 0.17974820582791498,
+      "bankroll": 198,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "A",
+            "suit": "h"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "4",
+              "suit": "s"
+            },
+            {
+              "rank": "A",
+              "suit": "s"
+            },
+            {
+              "rank": "9",
+              "suit": "h"
+            }
+          ],
+          "total": 14,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 17.",
+      "expectedEV": -0.004890157173015942,
+      "bankroll": 199,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "7",
+            "suit": "h"
+          },
+          {
+            "rank": "10",
+            "suit": "h"
+          }
+        ],
+        "total": 17,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "A",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            },
+            {
+              "rank": "2",
+              "suit": "s"
+            }
+          ],
+          "total": 18,
+          "soft": true,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 20.",
+      "expectedEV": 0.5755901685977685,
+      "bankroll": 199,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "6",
+            "suit": "c"
+          },
+          {
+            "rank": "4",
+            "suit": "d"
+          },
+          {
+            "rank": "K",
+            "suit": "h"
+          }
+        ],
+        "total": 20,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "7",
+              "suit": "d"
+            },
+            {
+              "rank": "3",
+              "suit": "c"
+            },
+            {
+              "rank": "10",
+              "suit": "d"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": true,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "D",
+          "action": "double",
+          "name": "Double",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 97,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.4400067221141506,
+      "bankroll": 200,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "A",
+            "suit": "h"
+          },
+          {
+            "rank": "7",
+            "suit": "s"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "9",
+              "suit": "s"
+            },
+            {
+              "rank": "5",
+              "suit": "d"
+            },
+            {
+              "rank": "5",
+              "suit": "c"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": true,
+        "taken": false,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "I",
+          "action": "insurance",
+          "name": "No insurance",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": true
+        },
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        },
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "bet": 1,
+      "net": 1,
+      "note": "Dealer busts.",
+      "expectedEV": 0.639986575216839,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "2",
+            "suit": "d"
+          },
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "5",
+            "suit": "s"
+          },
+          {
+            "rank": "2",
+            "suit": "c"
+          },
+          {
+            "rank": "J",
+            "suit": "c"
+          }
+        ],
+        "total": 24,
+        "bust": true,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "Q",
+              "suit": "d"
+            },
+            {
+              "rank": "10",
+              "suit": "c"
+            }
+          ],
+          "total": 20,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 99,
+      "bet": 1,
+      "net": 0,
+      "note": "Dealer stands on 19.",
+      "expectedEV": null,
+      "bankroll": 201,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "3",
+            "suit": "s"
+          },
+          {
+            "rank": "10",
+            "suit": "c"
+          },
+          {
+            "rank": "6",
+            "suit": "c"
+          }
+        ],
+        "total": 19,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "9",
+              "suit": "s"
+            },
+            {
+              "rank": "K",
+              "suit": "h"
+            }
+          ],
+          "total": 19,
+          "soft": false,
+          "bust": false,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "S",
+          "action": "stand",
+          "name": "Stand",
+          "graded": false,
+          "correct": false,
+          "evLost": null,
+          "insurance": false
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "bet": 1,
+      "net": -1,
+      "note": "Dealer stands on 18.",
+      "expectedEV": -0.5398263462810869,
+      "bankroll": 200,
+      "dealer": {
+        "cards": [
+          {
+            "rank": "K",
+            "suit": "d"
+          },
+          {
+            "rank": "8",
+            "suit": "c"
+          }
+        ],
+        "total": 18,
+        "bust": false,
+        "blackjack": false
+      },
+      "hands": [
+        {
+          "cards": [
+            {
+              "rank": "6",
+              "suit": "h"
+            },
+            {
+              "rank": "Q",
+              "suit": "h"
+            },
+            {
+              "rank": "K",
+              "suit": "c"
+            }
+          ],
+          "total": 26,
+          "soft": false,
+          "bust": true,
+          "natural": false,
+          "doubled": false,
+          "surrendered": false
+        }
+      ],
+      "insurance": {
+        "offered": false,
+        "taken": null,
+        "bet": 0
+      },
+      "actions": [
+        {
+          "letter": "H",
+          "action": "hit",
+          "name": "Hit",
+          "graded": true,
+          "correct": true,
+          "evLost": 0,
+          "insurance": false
+        }
+      ]
+    }
+  ]
+}

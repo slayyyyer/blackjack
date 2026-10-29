@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>100 Hands Against the House — Blackjack Lab</title>
+<meta name="author" content="Blackjack Lab">
+<meta name="description" content="A 100-round blackjack session against the CPU dealer, with a 100,000-hand reference comparison.">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #1c251f;
+    --muted: #68746c;
+    --paper: #fbf8ef;
+    --paper-2: #f1ebdd;
+    --line: #d8d0bd;
+    --green: #245a45;
+    --green-2: #2e6d52;
+    --red: #a94236;
+    --gold: #b48b41;
+    --dark: #121713;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: #1f241f;
+    font-size: 10.2pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    position: relative;
+    width: 210mm;
+    height: 296.9mm;
+    overflow: hidden;
+    padding: 16mm 17mm 15mm;
+    background: var(--paper);
+    break-after: page;
+    page-break-after: always;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @media screen {
+    body { padding: 24px; background: #1b201b; }
+    .page { margin: 0 auto 24px; box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; }
+  }
+  h1, h2, h3, p { margin: 0; }
+  em { font-style: italic; }
+  .page-head {
+    display: flex; justify-content: space-between; gap: 10mm;
+    padding-bottom: 3mm; border-bottom: 1px solid var(--line);
+    font-size: 7pt; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .page-head i { font-style: normal; color: var(--gold); padding: 0 1mm; }
+  .page-foot {
+    position: absolute; left: 17mm; right: 17mm; bottom: 8mm;
+    display: flex; justify-content: space-between;
+    border-top: 1px solid var(--line); padding-top: 2.5mm;
+    font-size: 6.7pt; letter-spacing: .13em; color: var(--muted);
+  }
+  .eyebrow {
+    margin-top: 8mm; font-size: 7.5pt; font-weight: 700;
+    letter-spacing: .17em; color: var(--gold); text-transform: uppercase;
+  }
+  .eyebrow.light { color: #d8b96d; }
+  .section-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28pt; line-height: 1.04; font-weight: 400;
+    letter-spacing: -.02em; margin: 2mm 0 4mm;
+  }
+  .section-title em { color: var(--green); }
+  .lede { max-width: 162mm; color: #39463e; font-size: 11.4pt; line-height: 1.55; }
+  .fine { color: var(--muted); font-size: 8pt; line-height: 1.45; margin-top: 2mm; }
+  .card-inline { font-family: Georgia, "Times New Roman", serif; white-space: nowrap; }
+  .card-inline.is-red { color: var(--red); }
+  .card-sep { color: #b0a792; padding: 0 1mm; }
+
+  /* Cover */
+  .cover { padding: 0; color: #f3eddc; background: var(--dark); }
+  .cover::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 25%, rgba(70,112,89,.32), transparent 42%),
+                linear-gradient(135deg, #111611 0%, #172019 52%, #101510 100%);
+  }
+  .cover-grid {
+    position: absolute; inset: 0; opacity: .14;
+    background-image: linear-gradient(rgba(243,237,220,.22) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(243,237,220,.22) 1px, transparent 1px);
+    background-size: 16mm 16mm;
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 78%);
+  }
+  .cover-inner { position: relative; height: 100%; padding: 17mm; display: flex; flex-direction: column; }
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover-brand { font-size: 8pt; font-weight: 700; letter-spacing: .2em; }
+  .brand-mark { color: #d8b96d; font-size: 14pt; vertical-align: -1pt; padding-right: 2mm; }
+  .cover-meta { text-align: right; font-size: 6.9pt; line-height: 1.6; letter-spacing: .13em; color: #a9b2a7; }
+  .cover-main { margin-top: 32mm; }
+  .cover h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 49pt; line-height: .92; font-weight: 400;
+    letter-spacing: -.035em; margin-top: 5mm;
+  }
+  .cover h1 em { color: #d8b96d; }
+  .cover-lede { margin-top: 8mm; color: #b8c0b4; font-size: 11.2pt; line-height: 1.65; }
+  .cover-score {
+    margin-top: auto; display: flex; align-items: flex-end; gap: 16mm;
+    border-top: 1px solid rgba(243,237,220,.22); padding-top: 6mm;
+  }
+  .cover-score-main .score-label { display: block; font-size: 6.8pt; letter-spacing: .2em; color: #9ca99e; }
+  .cover-score-main strong {
+    display: inline-block; font-family: Georgia, serif; font-weight: 400;
+    font-size: 42pt; line-height: 1; margin-top: 1mm; color: #f6f0df;
+  }
+  .cover-score-main .score-unit { color: #a9b2a7; font-size: 10pt; margin-left: 2mm; }
+  .cover-score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8mm; margin-left: auto; }
+  .cover-score-grid div { min-width: 20mm; }
+  .cover-score-grid span { display: block; font-size: 6.4pt; letter-spacing: .16em; color: #9ca99e; }
+  .cover-score-grid strong { display: block; font-size: 14pt; font-weight: 600; margin-top: 1mm; color: #f3eddc; }
+  .cover-bottom { margin-top: 9mm; display: flex; justify-content: space-between; align-items: flex-end; gap: 12mm; }
+  .rule-chips { display: flex; flex-wrap: wrap; gap: 1.5mm; max-width: 120mm; }
+  .rule-chips span {
+    border: 1px solid rgba(243,237,220,.25); border-radius: 99px;
+    padding: 1.2mm 2.4mm; font-size: 6.6pt; letter-spacing: .04em; color: #cbd2c7;
+  }
+  .cover-foot { font-size: 6.5pt; line-height: 1.6; color: #98a399; text-align: right; white-space: nowrap; }
+  .card-fan { position: absolute; right: 17mm; bottom: 67mm; width: 62mm; height: 70mm; }
+  .playing-card {
+    position: absolute; width: 30mm; height: 44mm; border-radius: 2.2mm;
+    background: #f7f0df; color: #18211b; padding: 2mm;
+    box-shadow: 0 3mm 9mm rgba(0,0,0,.35);
+    font-family: Georgia, serif; font-weight: 700;
+  }
+  .playing-card::after {
+    content: "♠"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 25pt; opacity: .12;
+  }
+  .playing-card.is-red { color: var(--red); }
+  .playing-card.is-red::after { content: "♥"; }
+  .pc-one { right: 25mm; bottom: 3mm; transform: rotate(-11deg); }
+  .pc-two { right: 12mm; bottom: 8mm; transform: rotate(4deg); }
+  .pc-three { right: 0; bottom: 1mm; transform: rotate(16deg); }
+  .pc-rank { display: block; font-size: 15pt; line-height: 1; }
+  .pc-suit { display: block; font-size: 13pt; line-height: 1; }
+
+  /* Summary */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 7mm 0 8mm; }
+  .kpi { background: #f2ecdd; border: 1px solid #ddd4c1; border-radius: 2.4mm; padding: 3.6mm 3.2mm; }
+  .kpi-label { display: block; font-size: 6.4pt; letter-spacing: .14em; color: var(--muted); font-weight: 700; }
+  .kpi strong { display: block; font-family: Georgia, serif; font-size: 20pt; font-weight: 400; line-height: 1.1; margin-top: 1.4mm; }
+  .kpi-note { display: block; color: var(--muted); font-size: 7.2pt; line-height: 1.3; margin-top: 1mm; }
+  .kpi-green { background: #e7efe8; border-color: #c4d9ca; }
+  .kpi-green strong { color: var(--green); }
+  .kpi-warm { background: #f6edd7; border-color: #e3d3a9; }
+  .kpi-warm strong { color: #87662b; }
+  .two-col { display: grid; grid-template-columns: 1.08fr .92fr; gap: 9mm; }
+  .col-title {
+    font-family: Georgia, serif; font-size: 15pt; font-weight: 400;
+    color: var(--green); margin-bottom: 2.5mm; border-bottom: 1px solid var(--line); padding-bottom: 2mm;
+  }
+  .score-table { width: 100%; border-collapse: collapse; }
+  .score-table th, .score-table td { padding: 1.9mm 1mm; border-bottom: 1px dotted #d5ccb9; text-align: left; font-size: 8.7pt; }
+  .score-table th { color: var(--muted); font-weight: 500; width: 27%; }
+  .score-table td { font-weight: 600; width: 23%; }
+  .action-list { border-top: 1px solid var(--line); }
+  .action-list div { display: flex; align-items: center; gap: 2.5mm; padding: 1.75mm 0; border-bottom: 1px dotted #d5ccb9; font-size: 8.9pt; }
+  .action-list strong { margin-left: auto; font-family: Georgia, serif; font-size: 12pt; font-weight: 400; }
+  .action-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 6mm; height: 6mm; border-radius: 50%; background: #e5eadf;
+    color: var(--green); font-size: 7.5pt; font-weight: 700;
+  }
+  .action-letter.ins { color: #87662b; background: #f2e6c8; font-size: 7pt; }
+  .verdict {
+    display: flex; gap: 4mm; margin-top: 8mm; padding: 4.5mm 5mm 4.5mm 3mm;
+    background: #e7efe8; border-left: 3px solid var(--green);
+    border-radius: 0 2.4mm 2.4mm 0;
+  }
+  .verdict-mark { font-family: Georgia, serif; font-size: 33pt; line-height: .65; color: #7da38d; }
+  .verdict-kicker { font-size: 6.5pt; letter-spacing: .17em; font-weight: 700; color: var(--green); }
+  .verdict-text { font-family: Georgia, serif; font-size: 11.4pt; line-height: 1.5; margin-top: 1.2mm; }
+
+  /* Charts */
+  .chart-card { background: #fffdf7; border: 1px solid var(--line); border-radius: 2.4mm; padding: 3.8mm 3mm 2mm; margin-top: 5mm; }
+  .chart { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart-legend { display: flex; gap: 5mm; padding: 0 1mm 1.5mm; font-size: 7.2pt; color: var(--muted); }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 1.5mm; }
+  .swatch { display: inline-block; width: 6mm; height: 1.2mm; border-radius: 2px; }
+  .line-dark { background: #264b3c; }
+  .line-dash { background: repeating-linear-gradient(90deg,#7c887e 0 1.3mm,transparent 1.3mm 2.2mm); }
+  .line-red { background: #b24a3b; }
+  .line-gold { background: #c2ae83; }
+  .band-swatch { background: #d5e4da; height: 3mm; border-radius: 1px; }
+  .grid { stroke: #e5ddca; stroke-width: 1; }
+  .grid-soft { stroke-dasharray: 2 4; opacity: .55; }
+  .axis { fill: #829087; font-size: 9px; font-family: "Segoe UI", Arial, sans-serif; }
+  .axis-axis-title { fill: #9a8a65; font-size: 7px; letter-spacing: .14em; font-weight: 700; }
+  .expected-line { fill: none; stroke: #7c887e; stroke-width: 1.4; stroke-dasharray: 4 4; }
+  .bank-line { fill: none; stroke: #173d2d; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+  .endpoint { fill: #173d2d; stroke: #fbf8ef; stroke-width: 2; }
+  .endpoint-end { fill: #d8b96d; }
+  .marker { stroke: #fbf8ef; stroke-width: 2; }
+  .marker-high { fill: #b48b41; }
+  .marker-low { fill: #a94236; }
+  .annotation text { fill: #526158; font-size: 9.5px; font-weight: 600; }
+  .legend-text { fill: #6b776f; font-size: 8px; letter-spacing: .12em; font-family: "Segoe UI", Arial, sans-serif; }
+  .row-label { fill: #526158; font-size: 9px; letter-spacing: .08em; font-weight: 700; font-family: "Segoe UI", Arial, sans-serif; }
+  .bar-label { fill: #4f4a3d; font-size: 10px; font-weight: 700; font-family: "Segoe UI", Arial, sans-serif; }
+  .bar-label.light { fill: #fffaf0; }
+  .value-label { fill: #526158; font-size: 9px; font-weight: 700; font-family: "Segoe UI", Arial, sans-serif; }
+  .chart-note { font-size: 7.4pt; color: var(--muted); line-height: 1.45; padding: 1mm 1mm 1mm; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin-top: 5mm; }
+  .stat { border-top: 2px solid #d8c9a7; padding-top: 2.2mm; }
+  .stat span { display: block; font-size: 6.3pt; letter-spacing: .14em; color: var(--muted); font-weight: 700; }
+  .stat strong { display: block; font-family: Georgia, serif; font-size: 17pt; font-weight: 400; line-height: 1.1; margin-top: .8mm; }
+  .stat small { display: block; color: var(--muted); font-size: 7pt; }
+  .callout { margin-top: 6mm; padding: 4mm 4.5mm; background: #f2ecdd; border-radius: 2mm; }
+  .callout-kicker { display: block; font-size: 6.4pt; letter-spacing: .16em; font-weight: 700; color: var(--gold); margin-bottom: 1.2mm; }
+  .callout p { font-size: 9.2pt; line-height: 1.55; }
+  .wide-callout { border-left: 3px solid #c7a35f; }
+  .tight-card { padding-bottom: 1mm; }
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 3mm; }
+  .compare-table th { text-align: left; font-size: 7pt; letter-spacing: .1em; color: var(--muted); font-weight: 600; padding: 2mm 2mm 1.5mm; border-bottom: 1px solid var(--line); }
+  .compare-table td { font-size: 9.1pt; padding: 1.9mm 2mm; border-bottom: 1px dotted #d5ccb9; }
+  .compare-table td:first-child { font-weight: 600; }
+  .compare-table .neg { color: var(--red); font-weight: 600; }
+  .compare-table .pos { color: var(--green); font-weight: 600; }
+  .push-callout { background: #f6edd7; border-left-color: #b48b41; }
+  .lower-title { margin-top: 5mm; }
+  .totals-card { margin-top: 3mm; padding-top: 2.5mm; }
+  .insight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; margin-top: 4mm; }
+  .insight-row p { font-size: 8.7pt; line-height: 1.45; color: #3b483f; border-top: 1px solid var(--line); padding-top: 2mm; }
+  .insight-row strong { color: var(--ink); }
+
+  /* Scorecard */
+  .log-title { display: flex; justify-content: space-between; gap: 12mm; margin: 5mm 0 3mm; align-items: flex-end; }
+  .log-title h2 { font-family: Georgia, serif; font-size: 22pt; font-weight: 400; color: var(--green); }
+  .log-title p { width: 92mm; font-size: 7.5pt; line-height: 1.4; color: var(--muted); }
+  .hand-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .hand-table th { font-size: 6.2pt; letter-spacing: .12em; color: var(--muted); text-align: left; padding: 1.5mm 1mm; border-bottom: 1px solid var(--line); }
+  .hand-table td { font-size: 7.15pt; padding: 1.08mm 1mm; border-bottom: 1px solid #e6dece; vertical-align: middle; }
+  .hand-table tr:nth-child(even) td { background: #f7f2e6; }
+  .hand-table th:nth-child(1), .hand-table td:nth-child(1) { width: 7mm; }
+  .hand-table th:nth-child(2), .hand-table td:nth-child(2) { width: 55mm; }
+  .hand-table th:nth-child(3), .hand-table td:nth-child(3) { width: 47mm; }
+  .hand-table th:nth-child(4), .hand-table td:nth-child(4) { width: 26mm; }
+  .hand-table th:nth-child(5), .hand-table td:nth-child(5) { width: 19mm; }
+  .hand-table th:nth-child(6), .hand-table td:nth-child(6) { width: 11mm; }
+  .hand-table th:nth-child(7), .hand-table td:nth-child(7) { width: 7mm; }
+  .hand-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .hand-table .cards { white-space: nowrap; letter-spacing: .01em; }
+  .hand-table .dealer-cards { color: #535e55; }
+  .hand-table .play-cell { color: var(--muted); font-size: 6.8pt; letter-spacing: .03em; }
+  .hand-table .result { font-weight: 700; }
+  .hand-table .result span { font-weight: 500; font-size: 6.8pt; margin-left: 1mm; }
+  .hand-table .is-win { color: var(--green); }
+  .hand-table .is-loss { color: var(--red); }
+  .hand-table .is-push { color: #8c7a51; }
+  .hand-table .ev-cell { color: #6f7a71; font-size: 6.8pt; }
+  .hand-table .grade-cell { color: var(--green); text-align: center; font-size: 8pt; }
+  .log-foot { margin-top: 2mm; font-size: 6.7pt; color: var(--muted); letter-spacing: .04em; }
+
+  /* Method */
+  .method-page { padding-top: 14mm; }
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 4mm; }
+  .method-card { background: #f2ecdd; border: 1px solid #ddd4c1; border-radius: 2.4mm; padding: 4mm; }
+  .method-card h3 { font-family: Georgia, serif; font-size: 13pt; font-weight: 400; color: var(--green); margin-bottom: 2mm; }
+  .rules-table { width: 100%; border-collapse: collapse; }
+  .rules-table th, .rules-table td { text-align: left; padding: 1.3mm 0; border-bottom: 1px dotted #d5ccb9; font-size: 8pt; }
+  .rules-table th { color: var(--muted); font-weight: 500; }
+  .method-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; margin-top: 2mm; }
+  .method-copy { margin-top: 2mm; }
+  .method-copy h3 { font-family: Georgia, serif; font-size: 12.5pt; font-weight: 400; color: var(--green); margin: 2.5mm 0 .8mm; }
+  .method-copy p { font-size: 8.7pt; line-height: 1.48; color: #39463e; margin-bottom: 1mm; }
+  .proof-copy { margin-top: 1mm; }
+  .reproduce { margin-top: 3mm; padding: 3mm 4mm; border: 1px solid var(--line); border-radius: 2mm; background: #f7f2e6; }
+  .reproduce code { display: inline-block; font-family: Consolas, "Courier New", monospace; font-size: 8.5pt; color: var(--green); background: #e7efe8; padding: 1.6mm 2.2mm; border-radius: 1mm; margin-top: 1mm; }
+  .reproduce p { font-size: 7.8pt; color: var(--muted); line-height: 1.4; margin-top: 1.8mm; }
+  .closing { margin-top: 3.5mm; padding-top: 3mm; border-top: 2px solid var(--green); }
+  .closing-kicker { font-size: 6.7pt; letter-spacing: .18em; color: var(--gold); font-weight: 700; }
+  .closing p:last-child { font-family: Georgia, serif; font-size: 15pt; line-height: 1.35; margin-top: 1.2mm; color: var(--green); }
+</style>
+</head>
+<body>
+  
+<section class="page cover">
+  <div class="cover-grid" aria-hidden="true"></div>
+  <div class="cover-inner">
+    <div class="cover-top">
+      <div class="cover-brand"><span class="brand-mark">♠</span> BLACKJACK LAB</div>
+      <div class="cover-meta">SESSION REPORT · 001<br>October 29, 2026</div>
+    </div>
+
+    <div class="cover-main">
+      <p class="eyebrow light">A FLAT-BET SESSION AGAINST THE CPU DEALER</p>
+      <h1>100 hands<br><em>against the house.</em></h1>
+      <p class="cover-lede">Six decks, one unit a hand, and the total-dependent chart.<br>No bet spread. No hunches. One hundred chances to be right.</p>
+    </div>
+
+    <div class="cover-score">
+      <div class="cover-score-main">
+        <span class="score-label">NET RESULT</span>
+        <strong>+0.00</strong>
+        <span class="score-unit">units</span>
+      </div>
+      <div class="cover-score-grid">
+        <div><span>ROUNDS</span><strong>100</strong></div>
+        <div><span>W–L–P</span><strong>39–42–19</strong></div>
+        <div><span>OPTIMAL</span><strong>114/114</strong></div>
+        <div><span>EV LOST</span><strong>0.000</strong></div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="rule-chips"><span>6 decks</span><span>S17</span><span>3:2</span><span>Double any 2</span><span>DAS</span><span>3 resplits</span></div>
+      <div class="cover-foot">BANKROLL +200.00 → +200.00 · SEED 20261029 · COMMIT 6e0fc28</div>
+    </div>
+
+    <div class="card-fan" aria-hidden="true">
+      <div class="playing-card pc-one"><span class="pc-rank">A</span><span class="pc-suit">♠</span></div>
+      <div class="playing-card pc-two is-red"><span class="pc-rank">K</span><span class="pc-suit">♥</span></div>
+      <div class="playing-card pc-three is-red"><span class="pc-rank">Q</span><span class="pc-suit">♦</span></div>
+    </div>
+  </div>
+</section>
+  
+<section class="page">
+  
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>EXECUTIVE SUMMARY</span>
+    </header>
+  <p class="eyebrow">THE SHORT VERSION</p>
+  <h2 class="section-title">A break-even session<br><em>is not a break-even player.</em></h2>
+  <p class="lede">After 100 hands, the bankroll was exactly where it started: 200.00 units in, 200.00 out. Underneath that flat result, the sample was unusually push-heavy — and the decisions were exactly what the chart ordered.</p>
+
+  <div class="kpis">
+    <div class="kpi kpi-green"><span class="kpi-label">NET RESULT</span><strong>+0.00</strong><span class="kpi-note">units over 100 rounds</span></div>
+    <div class="kpi"><span class="kpi-label">EXACT EXPECTATION</span><strong>-0.43</strong><span class="kpi-note">at the 0.426% fresh-shoe edge</span></div>
+    <div class="kpi"><span class="kpi-label">COACH EV LOST</span><strong>0.000</strong><span class="kpi-note">114 graded decisions</span></div>
+    <div class="kpi kpi-warm"><span class="kpi-label">ACCURACY</span><strong>100.0%</strong><span class="kpi-note">all graded plays optimal</span></div>
+  </div>
+
+  <div class="two-col summary-cols">
+    <div>
+      <h3 class="col-title">Scorecard</h3>
+      <table class="score-table">
+        <tbody>
+          <tr><th>Rounds</th><td>100</td><th>Hands</th><td>104</td></tr>
+          <tr><th>Wins</th><td>39</td><th>Losses</th><td>42</td></tr>
+          <tr><th>Pushes</th><td>19</td><th>Naturals</th><td>4</td></tr>
+          <tr><th>Dealer BJs</th><td>4</td><th>Doubles</th><td>10</td></tr>
+          <tr><th>Splits</th><td>4</td><th>Insurance</th><td>6 offers / 1 taken</td></tr>
+          <tr><th>High</th><td>207.00</td><th>Low</th><td>198.00</td></tr>
+        </tbody>
+      </table>
+      <p class="fine">Four split rounds produced the 104 hands. The bankroll peaked at 207.00 after hand 17 and bottomed at 198.00 after hand 94.</p>
+    </div>
+    <div>
+      <h3 class="col-title">The line</h3>
+      <div class="action-list">
+        <div><span class="action-letter">S</span><span>Stand</span><strong>63</strong></div>
+        <div><span class="action-letter">H</span><span>Hit</span><strong>49</strong></div>
+        <div><span class="action-letter">D</span><span>Double</span><strong>10</strong></div>
+        <div><span class="action-letter">P</span><span>Split</span><strong>4</strong></div>
+        <div><span class="action-letter ins">I</span><span>Insurance</span><strong>6</strong></div>
+      </div>
+      <p class="fine">114 of those actions carried a chart grade. All 114 were optimal. The remaining actions were rare post-hit states without a chart cell.</p>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-mark">“</div>
+    <div>
+      <p class="verdict-kicker">THE VERDICT</p>
+      <p class="verdict-text">Perfect play and a flat bankroll can coexist. The edge is only 0.43 units per 100 hands; the standard deviation is roughly 11.5. This session did not beat the house. It also did not prove the house was beating it.</p>
+    </div>
+  </div>
+  
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>02</span>
+    </footer>
+</section>
+  
+<section class="page">
+  
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>THE SHAPE OF THE SESSION</span>
+    </header>
+  <p class="eyebrow">THE LUCK CONE</p>
+  <h2 class="section-title">The path stayed<br><em>inside the noise.</em></h2>
+  <p class="lede">A 100-hand sample cannot settle a 0.426% edge. The shaded cone is the 95% range for a flat-betting player with the same policy, starting from the exact expectation. The bankroll line never leaves it.</p>
+
+  <div class="chart-card">
+    <div class="chart-legend">
+      <span><i class="swatch line-dark"></i>Bankroll</span>
+      <span><i class="swatch line-dash"></i>Exact expectation</span>
+      <span><i class="swatch band-swatch"></i>95% luck cone</span>
+    </div>
+    
+  <svg class="chart" viewBox="0 0 760 340" role="img" aria-label="Bankroll across 100 rounds inside a 95 percent luck cone">
+    <defs>
+      <linearGradient id="bankFill" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#3b7a60" stop-opacity="0.20"/>
+        <stop offset="100%" stop-color="#3b7a60" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    
+      <line x1="54" y1="302" x2="740" y2="302" class="grid"/>
+      <text x="45" y="305" text-anchor="end" class="axis">170</text>
+    
+      <line x1="54" y1="254.33333333333334" x2="740" y2="254.33333333333334" class="grid"/>
+      <text x="45" y="257.33333333333337" text-anchor="end" class="axis">180</text>
+    
+      <line x1="54" y1="206.66666666666666" x2="740" y2="206.66666666666666" class="grid"/>
+      <text x="45" y="209.66666666666666" text-anchor="end" class="axis">190</text>
+    
+      <line x1="54" y1="159" x2="740" y2="159" class="grid"/>
+      <text x="45" y="162" text-anchor="end" class="axis">200</text>
+    
+      <line x1="54" y1="111.33333333333333" x2="740" y2="111.33333333333333" class="grid"/>
+      <text x="45" y="114.33333333333333" text-anchor="end" class="axis">210</text>
+    
+      <line x1="54" y1="63.666666666666664" x2="740" y2="63.666666666666664" class="grid"/>
+      <text x="45" y="66.66666666666666" text-anchor="end" class="axis">220</text>
+    
+      <line x1="54" y1="16" x2="740" y2="16" class="grid"/>
+      <text x="45" y="19" text-anchor="end" class="axis">230</text>
+    
+    
+      <line x1="54" y1="16" x2="54" y2="302" class="grid grid-soft"/>
+      <text x="54" y="325" text-anchor="middle" class="axis">0</text>
+    
+      <line x1="191.20000000000002" y1="16" x2="191.20000000000002" y2="302" class="grid grid-soft"/>
+      <text x="191.20000000000002" y="325" text-anchor="middle" class="axis">20</text>
+    
+      <line x1="328.40000000000003" y1="16" x2="328.40000000000003" y2="302" class="grid grid-soft"/>
+      <text x="328.40000000000003" y="325" text-anchor="middle" class="axis">40</text>
+    
+      <line x1="465.59999999999997" y1="16" x2="465.59999999999997" y2="302" class="grid grid-soft"/>
+      <text x="465.59999999999997" y="325" text-anchor="middle" class="axis">60</text>
+    
+      <line x1="602.8000000000001" y1="16" x2="602.8000000000001" y2="302" class="grid grid-soft"/>
+      <text x="602.8000000000001" y="325" text-anchor="middle" class="axis">80</text>
+    
+      <line x1="740" y1="16" x2="740" y2="302" class="grid grid-soft"/>
+      <text x="740" y="325" text-anchor="middle" class="axis">100</text>
+    
+    <path d="M54.00,159.00 L60.86,148.25 L67.72,143.81 L74.58,140.41 L81.44,137.54 L88.30,135.02 L95.16,132.74 L102.02,130.65 L108.88,128.70 L115.74,126.87 L122.60,125.14 L129.46,123.50 L136.32,121.93 L143.18,120.43 L150.04,118.98 L156.90,117.59 L163.76,116.24 L170.62,114.94 L177.48,113.67 L184.34,112.44 L191.20,111.24 L198.06,110.07 L204.92,108.93 L211.78,107.81 L218.64,106.72 L225.50,105.65 L232.36,104.61 L239.22,103.58 L246.08,102.58 L252.94,101.59 L259.80,100.62 L266.66,99.66 L273.52,98.72 L280.38,97.80 L287.24,96.89 L294.10,95.99 L300.96,95.11 L307.82,94.24 L314.68,93.38 L321.54,92.53 L328.40,91.69 L335.26,90.87 L342.12,90.05 L348.98,89.24 L355.84,88.45 L362.70,87.66 L369.56,86.88 L376.42,86.11 L383.28,85.35 L390.14,84.60 L397.00,83.85 L403.86,83.12 L410.72,82.39 L417.58,81.66 L424.44,80.95 L431.30,80.24 L438.16,79.54 L445.02,78.84 L451.88,78.15 L458.74,77.47 L465.60,76.79 L472.46,76.12 L479.32,75.45 L486.18,74.79 L493.04,74.13 L499.90,73.48 L506.76,72.84 L513.62,72.20 L520.48,71.56 L527.34,70.93 L534.20,70.31 L541.06,69.69 L547.92,69.07 L554.78,68.46 L561.64,67.85 L568.50,67.24 L575.36,66.65 L582.22,66.05 L589.08,65.46 L595.94,64.87 L602.80,64.29 L609.66,63.71 L616.52,63.13 L623.38,62.56 L630.24,61.99 L637.10,61.42 L643.96,60.86 L650.82,60.30 L657.68,59.75 L664.54,59.20 L671.40,58.65 L678.26,58.10 L685.12,57.56 L691.98,57.02 L698.84,56.48 L705.70,55.95 L712.56,55.42 L719.42,54.89 L726.28,54.36 L733.14,53.84 L740.00,53.32 L740.00,268.74 LNaN,268.74 LNaN,268.18 LNaN,267.61 LNaN,267.05 LNaN,266.48 LNaN,265.91 LNaN,265.33 LNaN,264.76 LNaN,264.17 LNaN,263.59 LNaN,263.01 LNaN,262.42 LNaN,261.82 LNaN,261.23 LNaN,260.63 LNaN,260.02 LNaN,259.42 LNaN,258.81 LNaN,258.20 LNaN,257.58 LNaN,256.96 LNaN,256.33 LNaN,255.71 LNaN,255.07 LNaN,254.44 LNaN,253.80 LNaN,253.15 LNaN,252.51 LNaN,251.85 LNaN,251.20 LNaN,250.53 LNaN,249.87 LNaN,249.20 LNaN,248.52 LNaN,247.84 LNaN,247.15 LNaN,246.46 LNaN,245.77 LNaN,245.07 LNaN,244.36 LNaN,243.65 LNaN,242.93 LNaN,242.20 LNaN,241.47 LNaN,240.74 LNaN,239.99 LNaN,239.24 LNaN,238.49 LNaN,237.72 LNaN,236.95 LNaN,236.17 LNaN,235.39 LNaN,234.60 LNaN,233.79 LNaN,232.98 LNaN,232.16 LNaN,231.34 LNaN,230.50 LNaN,229.65 LNaN,228.80 LNaN,227.93 LNaN,227.05 LNaN,226.17 LNaN,225.27 LNaN,224.35 LNaN,223.43 LNaN,222.49 LNaN,221.54 LNaN,220.58 LNaN,219.60 LNaN,218.60 LNaN,217.59 LNaN,216.56 LNaN,215.51 LNaN,214.45 LNaN,213.36 LNaN,212.25 LNaN,211.12 LNaN,209.97 LNaN,208.78 LNaN,207.57 LNaN,206.33 LNaN,205.06 LNaN,203.75 LNaN,202.41 LNaN,201.02 LNaN,199.58 LNaN,198.10 LNaN,196.55 LNaN,194.95 LNaN,193.26 LNaN,191.49 LNaN,189.63 LNaN,187.64 LNaN,185.50 LNaN,183.19 LNaN,180.62 LNaN,177.72 LNaN,174.27 LNaN,169.79 LNaN,159.00 Z" fill="#7da995" opacity="0.22"/>
+    <path d="M54.00,159.00 L60.86,159.02 L67.72,159.04 L74.58,159.06 L81.44,159.08 L88.30,159.10 L95.16,159.12 L102.02,159.14 L108.88,159.16 L115.74,159.18 L122.60,159.20 L129.46,159.22 L136.32,159.24 L143.18,159.26 L150.04,159.28 L156.90,159.30 L163.76,159.32 L170.62,159.34 L177.48,159.37 L184.34,159.39 L191.20,159.41 L198.06,159.43 L204.92,159.45 L211.78,159.47 L218.64,159.49 L225.50,159.51 L232.36,159.53 L239.22,159.55 L246.08,159.57 L252.94,159.59 L259.80,159.61 L266.66,159.63 L273.52,159.65 L280.38,159.67 L287.24,159.69 L294.10,159.71 L300.96,159.73 L307.82,159.75 L314.68,159.77 L321.54,159.79 L328.40,159.81 L335.26,159.83 L342.12,159.85 L348.98,159.87 L355.84,159.89 L362.70,159.91 L369.56,159.93 L376.42,159.95 L383.28,159.97 L390.14,159.99 L397.00,160.01 L403.86,160.03 L410.72,160.05 L417.58,160.08 L424.44,160.10 L431.30,160.12 L438.16,160.14 L445.02,160.16 L451.88,160.18 L458.74,160.20 L465.60,160.22 L472.46,160.24 L479.32,160.26 L486.18,160.28 L493.04,160.30 L499.90,160.32 L506.76,160.34 L513.62,160.36 L520.48,160.38 L527.34,160.40 L534.20,160.42 L541.06,160.44 L547.92,160.46 L554.78,160.48 L561.64,160.50 L568.50,160.52 L575.36,160.54 L582.22,160.56 L589.08,160.58 L595.94,160.60 L602.80,160.62 L609.66,160.64 L616.52,160.66 L623.38,160.68 L630.24,160.70 L637.10,160.72 L643.96,160.74 L650.82,160.77 L657.68,160.79 L664.54,160.81 L671.40,160.83 L678.26,160.85 L685.12,160.87 L691.98,160.89 L698.84,160.91 L705.70,160.93 L712.56,160.95 L719.42,160.97 L726.28,160.99 L733.14,161.01 L740.00,161.03" class="expected-line"/>
+    <path d="M54.00,159.00 L60.86,151.85 L67.72,156.62 L74.58,151.85 L81.44,156.62 L88.30,156.62 L95.16,151.85 L102.02,156.62 L108.88,151.85 L115.74,156.62 L122.60,151.85 L129.46,147.08 L136.32,142.32 L143.18,147.08 L150.04,147.08 L156.90,142.32 L163.76,132.78 L170.62,125.63 L177.48,130.40 L184.34,135.17 L191.20,135.17 L198.06,139.93 L204.92,144.70 L211.78,144.70 L218.64,149.47 L225.50,144.70 L232.36,139.93 L239.22,149.47 L246.08,154.23 L252.94,149.47 L259.80,144.70 L266.66,149.47 L273.52,154.23 L280.38,159.00 L287.24,154.23 L294.10,154.23 L300.96,154.23 L307.82,159.00 L314.68,151.85 L321.54,156.62 L328.40,151.85 L335.26,147.08 L342.12,147.08 L348.98,151.85 L355.84,151.85 L362.70,156.62 L369.56,161.38 L376.42,166.15 L383.28,161.38 L390.14,161.38 L397.00,166.15 L403.86,161.38 L410.72,156.62 L417.58,156.62 L424.44,161.38 L431.30,151.85 L438.16,147.08 L445.02,147.08 L451.88,147.08 L458.74,137.55 L465.60,137.55 L472.46,142.32 L479.32,132.78 L486.18,142.32 L493.04,142.32 L499.90,142.32 L506.76,147.08 L513.62,137.55 L520.48,142.32 L527.34,147.08 L534.20,142.32 L541.06,147.08 L547.92,142.32 L554.78,147.08 L561.64,151.85 L568.50,151.85 L575.36,142.32 L582.22,137.55 L589.08,132.78 L595.94,128.02 L602.80,132.78 L609.66,128.02 L616.52,132.78 L623.38,137.55 L630.24,132.78 L637.10,137.55 L643.96,142.32 L650.82,147.08 L657.68,156.62 L664.54,161.38 L671.40,161.38 L678.26,154.23 L685.12,163.77 L691.98,159.00 L698.84,168.53 L705.70,163.77 L712.56,163.77 L719.42,159.00 L726.28,154.23 L733.14,154.23 L740.00,159.00" fill="url(#bankFill)"/>
+    <path d="M54.00,159.00 L60.86,151.85 L67.72,156.62 L74.58,151.85 L81.44,156.62 L88.30,156.62 L95.16,151.85 L102.02,156.62 L108.88,151.85 L115.74,156.62 L122.60,151.85 L129.46,147.08 L136.32,142.32 L143.18,147.08 L150.04,147.08 L156.90,142.32 L163.76,132.78 L170.62,125.63 L177.48,130.40 L184.34,135.17 L191.20,135.17 L198.06,139.93 L204.92,144.70 L211.78,144.70 L218.64,149.47 L225.50,144.70 L232.36,139.93 L239.22,149.47 L246.08,154.23 L252.94,149.47 L259.80,144.70 L266.66,149.47 L273.52,154.23 L280.38,159.00 L287.24,154.23 L294.10,154.23 L300.96,154.23 L307.82,159.00 L314.68,151.85 L321.54,156.62 L328.40,151.85 L335.26,147.08 L342.12,147.08 L348.98,151.85 L355.84,151.85 L362.70,156.62 L369.56,161.38 L376.42,166.15 L383.28,161.38 L390.14,161.38 L397.00,166.15 L403.86,161.38 L410.72,156.62 L417.58,156.62 L424.44,161.38 L431.30,151.85 L438.16,147.08 L445.02,147.08 L451.88,147.08 L458.74,137.55 L465.60,137.55 L472.46,142.32 L479.32,132.78 L486.18,142.32 L493.04,142.32 L499.90,142.32 L506.76,147.08 L513.62,137.55 L520.48,142.32 L527.34,147.08 L534.20,142.32 L541.06,147.08 L547.92,142.32 L554.78,147.08 L561.64,151.85 L568.50,151.85 L575.36,142.32 L582.22,137.55 L589.08,132.78 L595.94,128.02 L602.80,132.78 L609.66,128.02 L616.52,132.78 L623.38,137.55 L630.24,132.78 L637.10,137.55 L643.96,142.32 L650.82,147.08 L657.68,156.62 L664.54,161.38 L671.40,161.38 L678.26,154.23 L685.12,163.77 L691.98,159.00 L698.84,168.53 L705.70,163.77 L712.56,163.77 L719.42,159.00 L726.28,154.23 L733.14,154.23 L740.00,159.00" class="bank-line"/>
+    <circle cx="54" cy="159" r="4.2" class="endpoint"/>
+    <circle cx="740" cy="159" r="4.2" class="endpoint endpoint-end"/>
+    <circle cx="170.62" cy="125.63333333333334" r="4.5" class="marker marker-high"/>
+    <circle cx="698.8399999999999" cy="168.53333333333333" r="4.5" class="marker marker-low"/>
+    <g class="annotation">
+      <text x="164.62" y="115.63333333333334" text-anchor="end">207.00 · after 17</text>
+      <text x="705.8399999999999" y="185.53333333333333">198.00 · after 94</text>
+    </g>
+    <text x="54" y="12" class="axis-axis-title">BANKROLL / UNITS</text>
+    <text x="740" y="338" text-anchor="end" class="axis-axis-title">ROUND</text>
+  </svg>
+    <p class="chart-note">Expected path: 200.00 → 199.57. The 95% band at hand 100 is roughly ±22.6 units, so even a perfect player’s 100-hand result is dominated by variance.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat"><span>PEAK</span><strong>207.00</strong><small>after hand 17</small></div>
+    <div class="stat"><span>LOW</span><strong>198.00</strong><small>after hand 94</small></div>
+    <div class="stat"><span>LONGEST WIN STREAK</span><strong>4</strong><small>hands in a row</small></div>
+    <div class="stat"><span>LONGEST LOSS STREAK</span><strong>5</strong><small>hands in a row</small></div>
+  </div>
+
+  <div class="callout wide-callout">
+    <span class="callout-kicker">READING THE CHART</span>
+    <p>The session finished <strong>+0.43 units above</strong> the exact fresh-shoe expectation. That is only <strong>0.04 standard deviations</strong> — indistinguishable from noise. The peak of 207.00 and the trough of 198.00 both fit comfortably inside the cone.</p>
+  </div>
+  
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>03</span>
+    </footer>
+</section>
+  
+<section class="page">
+  
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>THE COMPARISON</span>
+    </header>
+  <p class="eyebrow">100 HANDS VS 100,000</p>
+  <h2 class="section-title">The sample was<br><em>push-heavy.</em></h2>
+  <p class="lede">The same rules and chart policy played 100,000 rounds. The reference is not a prediction for this session; it is a long-run baseline for the outcome mix. The session’s zero-net rounds stand out immediately.</p>
+
+  <table class="compare-table">
+    <thead><tr><th>Result</th><th>This session</th><th>100,000-hand reference</th><th>Difference</th></tr></thead>
+    <tbody>
+      <tr><td>Win</td><td>39 · 39.0%</td><td>43.2%</td><td class="neg">-4.2 pts</td></tr>
+      <tr><td>Loss</td><td>42 · 42.0%</td><td>47.5%</td><td class="neg">-5.5 pts</td></tr>
+      <tr><td>Push / exactly zero</td><td>19 · 19.0%</td><td>9.2%</td><td class="pos">+9.8 pts</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout wide-callout push-callout">
+    <span class="callout-kicker">THE PUSH PROBLEM</span>
+    <p><strong>19 zero-net rounds</strong> is about <strong>3.4 standard deviations</strong> above the reference push rate. Eighteen were genuine total pushes; the nineteenth was the insurance save on a dealer blackjack. More pushes means fewer chances to win or lose — and a flatter bankroll.</p>
+  </div>
+
+  <h3 class="col-title lower-title">You vs the CPU dealer</h3>
+  <p class="fine">Played-out rounds only: the 8 rounds that ended on a natural or a dealer blackjack are excluded, leaving 92 dealer totals and 96 player hands.</p>
+  <div class="chart-card tight-card totals-card">
+    
+  <svg class="chart" viewBox="0 0 760 306" role="img" aria-label="Final totals for the player and dealer in played out rounds">
+    <g class="legend-row">
+      <rect x="52" y="4" width="11" height="11" rx="2" fill="#264b3c"/>
+      <text x="69" y="13" class="legend-text">PLAYER</text>
+      <rect x="151" y="4" width="11" height="11" rx="2" fill="#b24a3b"/>
+      <text x="168" y="13" class="legend-text">DEALER</text>
+    </g>
+    
+      <line x1="52" y1="264" x2="740" y2="264" class="grid"/>
+      <text x="43" y="267" text-anchor="end" class="axis">0</text>
+    
+      <line x1="52" y1="216.8" x2="740" y2="216.8" class="grid"/>
+      <text x="43" y="219.8" text-anchor="end" class="axis">5</text>
+    
+      <line x1="52" y1="169.6" x2="740" y2="169.6" class="grid"/>
+      <text x="43" y="172.6" text-anchor="end" class="axis">10</text>
+    
+      <line x1="52" y1="122.4" x2="740" y2="122.4" class="grid"/>
+      <text x="43" y="125.4" text-anchor="end" class="axis">15</text>
+    
+      <line x1="52" y1="75.19999999999999" x2="740" y2="75.19999999999999" class="grid"/>
+      <text x="43" y="78.19999999999999" text-anchor="end" class="axis">20</text>
+    
+      <line x1="52" y1="28" x2="740" y2="28" class="grid"/>
+      <text x="43" y="31" text-anchor="end" class="axis">25</text>
+    
+    
+        <rect x="70.64" y="46.879999999999995" width="28.502857142857142" height="217.12" rx="2" fill="#264b3c"/>
+        <rect x="103.14285714285714" y="264" width="28.502857142857142" height="0" rx="2" fill="#b24a3b"/>
+        <text x="84.89142857142856" y="39.879999999999995" text-anchor="middle" class="value-label">23</text>
+        <text x="117.39428571428572" y="257" text-anchor="middle" class="value-label">0</text>
+        <text x="101.14285714285714" y="291" text-anchor="middle" class="axis">≤16</text>
+      
+        <rect x="168.92571428571426" y="141.28" width="28.502857142857142" height="122.72" rx="2" fill="#264b3c"/>
+        <rect x="201.42857142857142" y="197.92" width="28.502857142857142" height="66.08000000000001" rx="2" fill="#b24a3b"/>
+        <text x="183.17714285714285" y="134.28" text-anchor="middle" class="value-label">13</text>
+        <text x="215.67999999999998" y="190.92" text-anchor="middle" class="value-label">7</text>
+        <text x="199.42857142857142" y="291" text-anchor="middle" class="axis">17</text>
+      
+        <rect x="267.2114285714286" y="169.6" width="28.502857142857142" height="94.4" rx="2" fill="#264b3c"/>
+        <rect x="299.7142857142857" y="46.879999999999995" width="28.502857142857142" height="217.12" rx="2" fill="#b24a3b"/>
+        <text x="281.46285714285716" y="162.6" text-anchor="middle" class="value-label">10</text>
+        <text x="313.9657142857143" y="39.879999999999995" text-anchor="middle" class="value-label">23</text>
+        <text x="297.7142857142857" y="291" text-anchor="middle" class="axis">18</text>
+      
+        <rect x="365.49714285714293" y="160.16" width="28.502857142857142" height="103.84" rx="2" fill="#264b3c"/>
+        <rect x="398.00000000000006" y="150.72" width="28.502857142857142" height="113.28" rx="2" fill="#b24a3b"/>
+        <text x="379.7485714285715" y="153.16" text-anchor="middle" class="value-label">11</text>
+        <text x="412.2514285714286" y="143.72" text-anchor="middle" class="value-label">12</text>
+        <text x="396.00000000000006" y="291" text-anchor="middle" class="axis">19</text>
+      
+        <rect x="463.7828571428572" y="94.08000000000001" width="28.502857142857142" height="169.92" rx="2" fill="#264b3c"/>
+        <rect x="496.28571428571433" y="65.76000000000002" width="28.502857142857142" height="198.23999999999998" rx="2" fill="#b24a3b"/>
+        <text x="478.0342857142858" y="87.08000000000001" text-anchor="middle" class="value-label">18</text>
+        <text x="510.5371428571429" y="58.76000000000002" text-anchor="middle" class="value-label">21</text>
+        <text x="494.28571428571433" y="291" text-anchor="middle" class="axis">20</text>
+      
+        <rect x="562.0685714285714" y="207.36" width="28.502857142857142" height="56.639999999999986" rx="2" fill="#264b3c"/>
+        <rect x="594.5714285714286" y="216.8" width="28.502857142857142" height="47.19999999999999" rx="2" fill="#b24a3b"/>
+        <text x="576.3199999999999" y="200.36" text-anchor="middle" class="value-label">6</text>
+        <text x="608.8228571428572" y="209.8" text-anchor="middle" class="value-label">5</text>
+        <text x="592.5714285714286" y="291" text-anchor="middle" class="axis">21</text>
+      
+        <rect x="660.3542857142858" y="122.4" width="28.502857142857142" height="141.6" rx="2" fill="#264b3c"/>
+        <rect x="692.8571428571429" y="37.44" width="28.502857142857142" height="226.56" rx="2" fill="#b24a3b"/>
+        <text x="674.6057142857143" y="115.4" text-anchor="middle" class="value-label">15</text>
+        <text x="707.1085714285715" y="30.439999999999998" text-anchor="middle" class="value-label">24</text>
+        <text x="690.8571428571429" y="291" text-anchor="middle" class="axis">Bust</text>
+      
+  </svg>
+  </div>
+  <div class="insight-row">
+    <p><strong>Dealer 18 is a wall.</strong> The dealer made 18 23 times, more than any other total; the player made 18 only 10 times.</p>
+    <p><strong>The dealer busted 24 times;</strong> the player busted 15 hands. Standing pat is not passive here — it is the whole game.</p>
+  </div>
+  
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>04</span>
+    </footer>
+</section>
+  
+  <section class="page log-page">
+    
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>THE SCORECARD <i>/</i> HANDS 1–34</span>
+    </header>
+    <div class="log-title">
+      <h2>The scorecard</h2>
+      <p>Every round, in order. Net is in units of the flat one-unit bet. EV is the coach’s expectation for the first graded action; a dash means the round ended before a graded decision.</p>
+    </div>
+    <table class="hand-table">
+      <thead>
+        <tr><th>#</th><th>YOU</th><th>DEALER</th><th>PLAY</th><th>NET</th><th>EV</th><th>✓</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="num">01</td>
+        <td class="cards"><span class="card-inline is-red">10♥</span> <span class="card-inline is-red">A♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">9♥</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-win">W <span>+1.50</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">02</td>
+        <td class="cards"><span class="card-inline is-red">K♦</span> <span class="card-inline">3♣</span> <span class="card-inline is-red">9♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♦</span> <span class="card-inline is-red">6♥</span> <span class="card-inline">K♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.43</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">03</td>
+        <td class="cards"><span class="card-inline is-red">2♥</span> <span class="card-inline">K♣</span> <span class="card-inline is-red">2♥</span> <span class="card-inline">5♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♠</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">K♣</span></td>
+        <td class="play-cell">H · H · S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.27</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">04</td>
+        <td class="cards"><span class="card-inline is-red">7♦</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">5♦</span> <span class="card-inline is-red">6♦</span> <span class="card-inline is-red">8♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.04</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">05</td>
+        <td class="cards"><span class="card-inline">8♠</span> <span class="card-inline is-red">Q♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♦</span> <span class="card-inline">5♠</span> <span class="card-inline">3♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">06</td>
+        <td class="cards"><span class="card-inline is-red">3♥</span> <span class="card-inline is-red">J♥</span> <span class="card-inline is-red">8♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">J♣</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.43</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">07</td>
+        <td class="cards"><span class="card-inline is-red">5♥</span> <span class="card-inline">10♠</span> <span class="card-inline is-red">7♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♦</span> <span class="card-inline">7♣</span> <span class="card-inline">7♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.42</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">08</td>
+        <td class="cards"><span class="card-inline is-red">5♥</span> <span class="card-inline">9♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">6♥</span> <span class="card-inline is-red">J♥</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">09</td>
+        <td class="cards"><span class="card-inline is-red">Q♥</span> <span class="card-inline is-red">2♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">6♥</span> <span class="card-inline is-red">3♥</span> <span class="card-inline">9♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">10</td>
+        <td class="cards"><span class="card-inline">K♠</span> <span class="card-inline">8♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">K♣</span> <span class="card-inline is-red">7♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">11</td>
+        <td class="cards"><span class="card-inline is-red">A♦</span> <span class="card-inline is-red">8♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">3♦</span> <span class="card-inline is-red">J♦</span> <span class="card-inline">5♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.40</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">12</td>
+        <td class="cards"><span class="card-inline">Q♣</span> <span class="card-inline is-red">6♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♠</span> <span class="card-inline is-red">7♥</span> <span class="card-inline">3♠</span> <span class="card-inline">6♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">13</td>
+        <td class="cards"><span class="card-inline">5♣</span> <span class="card-inline">3♠</span> <span class="card-inline is-red">9♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">A♣</span> <span class="card-inline">9♠</span></td>
+        <td class="play-cell">I · H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.20</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">14</td>
+        <td class="cards"><span class="card-inline">8♣</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">5♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">K♠</span> <span class="card-inline">7♠</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">-0.38</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">15</td>
+        <td class="cards"><span class="card-inline">J♣</span> <span class="card-inline">J♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">5♦</span> <span class="card-inline is-red">J♥</span> <span class="card-inline is-red">3♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.67</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">16</td>
+        <td class="cards"><span class="card-inline">2♣</span> <span class="card-inline">8♣</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">4♦</span> <span class="card-inline">K♣</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.46</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">17</td>
+        <td class="cards"><span class="card-inline">A♠</span> <span class="card-inline is-red">J♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♠</span> <span class="card-inline">J♣</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-win">W <span>+1.50</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">18</td>
+        <td class="cards"><span class="card-inline">9♣</span> <span class="card-inline is-red">6♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♣</span> <span class="card-inline">7♣</span> <span class="card-inline">K♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.21</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">19</td>
+        <td class="cards"><span class="card-inline is-red">K♥</span> <span class="card-inline is-red">5♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">J♥</span> <span class="card-inline is-red">A♥</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">20</td>
+        <td class="cards"><span class="card-inline">Q♠</span> <span class="card-inline">9♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">5♦</span> <span class="card-inline is-red">7♥</span> <span class="card-inline">7♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">21</td>
+        <td class="cards"><span class="card-inline is-red">3♥</span> <span class="card-inline is-red">3♦</span> <span class="card-inline">Q♣</span> <span class="card-inline">8♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♠</span> <span class="card-inline">K♣</span></td>
+        <td class="play-cell">H · H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.22</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">22</td>
+        <td class="cards"><span class="card-inline is-red">4♦</span> <span class="card-inline">8♠</span> <span class="card-inline is-red">Q♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">9♥</span> <span class="card-inline">2♠</span> <span class="card-inline">7♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.34</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">23</td>
+        <td class="cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">4♦</span><span class="card-sep"> / </span><span class="card-inline is-red">A♦</span> <span class="card-inline">K♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">K♠</span> <span class="card-inline">8♠</span></td>
+        <td class="play-cell">P</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.18</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">24</td>
+        <td class="cards"><span class="card-inline">5♠</span> <span class="card-inline is-red">8♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">Q♠</span> <span class="card-inline">A♣</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">25</td>
+        <td class="cards"><span class="card-inline">K♠</span> <span class="card-inline is-red">5♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♣</span> <span class="card-inline">10♠</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">26</td>
+        <td class="cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">6♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">4♦</span> <span class="card-inline">J♣</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.21</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">27</td>
+        <td class="cards"><span class="card-inline">6♣</span> <span class="card-inline">A♣</span> <span class="card-inline">5♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">3♠</span> <span class="card-inline is-red">A♥</span> <span class="card-inline is-red">A♥</span> <span class="card-inline is-red">A♦</span> <span class="card-inline">4♠</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-loss">L <span>-2.00</span></td>
+        <td class="num ev-cell">+0.06</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">28</td>
+        <td class="cards"><span class="card-inline">10♣</span> <span class="card-inline">3♣</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♦</span> <span class="card-inline">2♣</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.32</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">29</td>
+        <td class="cards"><span class="card-inline is-red">10♥</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">2♣</span> <span class="card-inline">3♠</span> <span class="card-inline">9♠</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.64</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">30</td>
+        <td class="cards"><span class="card-inline">7♣</span> <span class="card-inline">A♣</span> <span class="card-inline">8♣</span> <span class="card-inline">5♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">A♦</span> <span class="card-inline">2♣</span> <span class="card-inline is-red">2♥</span> <span class="card-inline">9♠</span> <span class="card-inline is-red">A♦</span> <span class="card-inline is-red">5♥</span></td>
+        <td class="play-cell">I · H · H</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.09</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">31</td>
+        <td class="cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">7♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">5♣</span> <span class="card-inline is-red">K♦</span> <span class="card-inline">6♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.04</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">32</td>
+        <td class="cards"><span class="card-inline">2♣</span> <span class="card-inline">4♠</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">3♦</span> <span class="card-inline">K♠</span> <span class="card-inline">6♣</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.11</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">33</td>
+        <td class="cards"><span class="card-inline">7♠</span> <span class="card-inline is-red">2♦</span> <span class="card-inline">4♣</span> <span class="card-inline">3♠</span> <span class="card-inline">4♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♦</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">3♠</span> <span class="card-inline">6♠</span></td>
+        <td class="play-cell">H · H · H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">+0.10</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">34</td>
+        <td class="cards"><span class="card-inline">J♠</span> <span class="card-inline">7♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">6♦</span> <span class="card-inline">8♠</span> <span class="card-inline">K♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.01</td>
+        <td class="grade-cell">✓</td>
+      </tr></tbody>
+    </table>
+    <div class="log-foot">Play: H hit · S stand · D double · P split · I insurance.</div>
+    
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>05</span>
+    </footer>
+  </section>
+  
+  <section class="page log-page">
+    
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>THE SCORECARD <i>/</i> HANDS 35–67</span>
+    </header>
+    <div class="log-title">
+      <h2>The scorecard</h2>
+      <p>Every round, in order. Net is in units of the flat one-unit bet. EV is the coach’s expectation for the first graded action; a dash means the round ended before a graded decision.</p>
+    </div>
+    <table class="hand-table">
+      <thead>
+        <tr><th>#</th><th>YOU</th><th>DEALER</th><th>PLAY</th><th>NET</th><th>EV</th><th>✓</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="num">35</td>
+        <td class="cards"><span class="card-inline">8♣</span> <span class="card-inline is-red">2♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="play-cell">I</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.01</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">36</td>
+        <td class="cards"><span class="card-inline">7♣</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">7♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">2♣</span> <span class="card-inline">10♠</span> <span class="card-inline">2♠</span> <span class="card-inline">4♠</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.47</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">37</td>
+        <td class="cards"><span class="card-inline">8♣</span> <span class="card-inline">6♣</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♣</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.37</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">38</td>
+        <td class="cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">Q♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">7♠</span> <span class="card-inline is-red">J♥</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-win">W <span>+1.50</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">39</td>
+        <td class="cards"><span class="card-inline">4♣</span> <span class="card-inline is-red">6♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">A♦</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">40</td>
+        <td class="cards"><span class="card-inline is-red">K♦</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">3♣</span> <span class="card-inline is-red">9♥</span> <span class="card-inline is-red">A♦</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.65</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">41</td>
+        <td class="cards"><span class="card-inline is-red">5♦</span> <span class="card-inline">9♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♣</span> <span class="card-inline is-red">9♥</span> <span class="card-inline">7♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">42</td>
+        <td class="cards"><span class="card-inline">J♠</span> <span class="card-inline">Q♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">J♥</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.55</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">43</td>
+        <td class="cards"><span class="card-inline is-red">K♥</span> <span class="card-inline is-red">4♦</span> <span class="card-inline">Q♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♣</span> <span class="card-inline is-red">4♦</span> <span class="card-inline">9♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.37</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">44</td>
+        <td class="cards"><span class="card-inline is-red">10♥</span> <span class="card-inline">8♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♦</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">45</td>
+        <td class="cards"><span class="card-inline is-red">K♦</span> <span class="card-inline is-red">6♦</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">Q♠</span> <span class="card-inline">10♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.54</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">46</td>
+        <td class="cards"><span class="card-inline">3♠</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♣</span> <span class="card-inline">5♠</span> <span class="card-inline">6♠</span> <span class="card-inline is-red">5♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.21</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">47</td>
+        <td class="cards"><span class="card-inline is-red">6♦</span> <span class="card-inline is-red">2♦</span> <span class="card-inline">J♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.25</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">48</td>
+        <td class="cards"><span class="card-inline">9♣</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">5♣</span> <span class="card-inline is-red">J♥</span> <span class="card-inline is-red">2♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">49</td>
+        <td class="cards"><span class="card-inline is-red">J♦</span> <span class="card-inline">7♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">4♦</span> <span class="card-inline is-red">4♦</span> <span class="card-inline">9♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">-0.08</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">50</td>
+        <td class="cards"><span class="card-inline">3♣</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♣</span> <span class="card-inline">6♠</span> <span class="card-inline is-red">6♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">51</td>
+        <td class="cards"><span class="card-inline">3♣</span> <span class="card-inline is-red">9♥</span> <span class="card-inline">9♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♥</span> <span class="card-inline is-red">A♥</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.27</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">52</td>
+        <td class="cards"><span class="card-inline is-red">10♦</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">7♣</span> <span class="card-inline is-red">A♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.77</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">53</td>
+        <td class="cards"><span class="card-inline">9♠</span> <span class="card-inline">7♣</span> <span class="card-inline">4♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">K♣</span> <span class="card-inline is-red">3♦</span> <span class="card-inline is-red">A♦</span> <span class="card-inline">6♠</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">-0.54</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">54</td>
+        <td class="cards"><span class="card-inline is-red">10♥</span> <span class="card-inline is-red">3♦</span> <span class="card-inline">Q♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♦</span> <span class="card-inline is-red">A♥</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.32</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">55</td>
+        <td class="cards"><span class="card-inline">7♠</span> <span class="card-inline is-red">4♦</span> <span class="card-inline">9♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">Q♣</span> <span class="card-inline is-red">9♦</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.18</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">56</td>
+        <td class="cards"><span class="card-inline">10♠</span> <span class="card-inline">6♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">3♥</span> <span class="card-inline">8♠</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">8♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.25</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">57</td>
+        <td class="cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">3♥</span> <span class="card-inline is-red">Q♥</span> <span class="card-inline">5♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♣</span> <span class="card-inline">6♠</span> <span class="card-inline">5♣</span></td>
+        <td class="play-cell">H · H · S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.01</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">58</td>
+        <td class="cards"><span class="card-inline is-red">8♦</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline">8♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">59</td>
+        <td class="cards"><span class="card-inline is-red">5♦</span> <span class="card-inline">5♠</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">2♠</span> <span class="card-inline">2♣</span> <span class="card-inline is-red">J♥</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.36</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">60</td>
+        <td class="cards"><span class="card-inline is-red">J♥</span> <span class="card-inline">Q♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">A♦</span> <span class="card-inline">9♣</span></td>
+        <td class="play-cell">I · S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.66</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">61</td>
+        <td class="cards"><span class="card-inline">3♠</span> <span class="card-inline">J♣</span> <span class="card-inline">K♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">A♠</span> <span class="card-inline">3♠</span> <span class="card-inline">9♠</span> <span class="card-inline">5♠</span></td>
+        <td class="play-cell">I · H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.40</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">62</td>
+        <td class="cards"><span class="card-inline is-red">2♦</span> <span class="card-inline">10♣</span> <span class="card-inline">6♣</span><span class="card-sep"> / </span><span class="card-inline">2♠</span> <span class="card-inline is-red">K♥</span> <span class="card-inline">7♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">7♣</span> <span class="card-inline">7♣</span> <span class="card-inline">10♠</span></td>
+        <td class="play-cell">P · H · S · H · S</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.01</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">63</td>
+        <td class="cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">5♥</span> <span class="card-inline">10♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♠</span> <span class="card-inline">4♣</span> <span class="card-inline">J♠</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-loss">L <span>-2.00</span></td>
+        <td class="num ev-cell">+0.06</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">64</td>
+        <td class="cards"><span class="card-inline">Q♣</span> <span class="card-inline is-red">6♦</span> <span class="card-inline is-red">2♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">10♥</span> <span class="card-inline is-red">8♦</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">-0.54</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">65</td>
+        <td class="cards"><span class="card-inline">Q♠</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">Q♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.55</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">66</td>
+        <td class="cards"><span class="card-inline is-red">A♦</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline">4♣</span> <span class="card-inline">7♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">+0.55</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">67</td>
+        <td class="cards"><span class="card-inline">4♠</span> <span class="card-inline is-red">6♦</span> <span class="card-inline is-red">2♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♠</span> <span class="card-inline">8♣</span> <span class="card-inline">7♠</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.29</td>
+        <td class="grade-cell">✓</td>
+      </tr></tbody>
+    </table>
+    <div class="log-foot"></div>
+    
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>06</span>
+    </footer>
+  </section>
+  
+  <section class="page log-page">
+    
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>THE SCORECARD <i>/</i> HANDS 68–100</span>
+    </header>
+    <div class="log-title">
+      <h2>The scorecard</h2>
+      <p>Every round, in order. Net is in units of the flat one-unit bet. EV is the coach’s expectation for the first graded action; a dash means the round ended before a graded decision.</p>
+    </div>
+    <table class="hand-table">
+      <thead>
+        <tr><th>#</th><th>YOU</th><th>DEALER</th><th>PLAY</th><th>NET</th><th>EV</th><th>✓</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="num">68</td>
+        <td class="cards"><span class="card-inline is-red">8♦</span> <span class="card-inline">6♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">2♠</span> <span class="card-inline is-red">A♦</span> <span class="card-inline">6♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.29</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">69</td>
+        <td class="cards"><span class="card-inline is-red">K♥</span> <span class="card-inline is-red">6♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">2♣</span> <span class="card-inline">A♣</span> <span class="card-inline is-red">2♦</span> <span class="card-inline">Q♣</span> <span class="card-inline">5♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.29</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">70</td>
+        <td class="cards"><span class="card-inline">K♠</span> <span class="card-inline is-red">J♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">7♥</span> <span class="card-inline">3♠</span> <span class="card-inline">5♣</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.77</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">71</td>
+        <td class="cards"><span class="card-inline is-red">10♦</span> <span class="card-inline">4♣</span> <span class="card-inline">A♠</span> <span class="card-inline">7♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♠</span> <span class="card-inline is-red">7♦</span> <span class="card-inline is-red">7♥</span></td>
+        <td class="play-cell">H · H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.37</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">72</td>
+        <td class="cards"><span class="card-inline">8♠</span> <span class="card-inline">A♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">9♥</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.29</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">73</td>
+        <td class="cards"><span class="card-inline is-red">J♦</span> <span class="card-inline">5♠</span> <span class="card-inline">2♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♥</span> <span class="card-inline">J♣</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.50</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">74</td>
+        <td class="cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline">5♠</span> <span class="card-inline">Q♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">9♦</span> <span class="card-inline">10♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.47</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">75</td>
+        <td class="cards"><span class="card-inline">K♠</span> <span class="card-inline is-red">J♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♠</span> <span class="card-inline is-red">6♦</span> <span class="card-inline is-red">J♦</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.66</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">76</td>
+        <td class="cards"><span class="card-inline is-red">A♥</span> <span class="card-inline is-red">10♥</span><span class="card-sep"> / </span><span class="card-inline">A♣</span> <span class="card-inline">3♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">5♠</span> <span class="card-inline is-red">10♦</span> <span class="card-inline">10♠</span></td>
+        <td class="play-cell">P</td>
+        <td class="num result is-win">W <span>+2.00</span></td>
+        <td class="num ev-cell">+0.61</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">77</td>
+        <td class="cards"><span class="card-inline is-red">2♥</span> <span class="card-inline">A♠</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">4♥</span> <span class="card-inline is-red">6♥</span> <span class="card-inline is-red">2♥</span> <span class="card-inline is-red">2♥</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.10</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">78</td>
+        <td class="cards"><span class="card-inline is-red">J♥</span> <span class="card-inline">8♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">8♥</span> <span class="card-inline">7♣</span> <span class="card-inline">10♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">79</td>
+        <td class="cards"><span class="card-inline">5♣</span> <span class="card-inline">4♠</span> <span class="card-inline is-red">2♦</span> <span class="card-inline">3♠</span> <span class="card-inline is-red">7♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">7♥</span> <span class="card-inline">A♠</span></td>
+        <td class="play-cell">H · H · H</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.17</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">80</td>
+        <td class="cards"><span class="card-inline is-red">K♥</span> <span class="card-inline is-red">3♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">5♠</span> <span class="card-inline is-red">7♥</span> <span class="card-inline">4♣</span> <span class="card-inline">A♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.17</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">81</td>
+        <td class="cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline is-red">5♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">6♥</span> <span class="card-inline is-red">J♦</span> <span class="card-inline">Q♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.15</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">82</td>
+        <td class="cards"><span class="card-inline">K♣</span> <span class="card-inline">3♠</span> <span class="card-inline is-red">9♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♣</span> <span class="card-inline">Q♠</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.32</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">83</td>
+        <td class="cards"><span class="card-inline is-red">J♦</span> <span class="card-inline is-red">4♥</span> <span class="card-inline is-red">J♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">7♠</span> <span class="card-inline">5♣</span> <span class="card-inline is-red">7♥</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.32</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">84</td>
+        <td class="cards"><span class="card-inline">10♠</span> <span class="card-inline">J♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">8♣</span> <span class="card-inline is-red">7♦</span> <span class="card-inline">4♠</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.79</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">85</td>
+        <td class="cards"><span class="card-inline is-red">3♦</span> <span class="card-inline is-red">4♥</span> <span class="card-inline">2♣</span> <span class="card-inline is-red">5♦</span> <span class="card-inline is-red">A♥</span> <span class="card-inline">2♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">J♦</span> <span class="card-inline">J♣</span></td>
+        <td class="play-cell">H · H · H · H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.32</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">86</td>
+        <td class="cards"><span class="card-inline is-red">J♥</span> <span class="card-inline">7♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">J♥</span> <span class="card-inline">10♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.42</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">87</td>
+        <td class="cards"><span class="card-inline is-red">7♥</span> <span class="card-inline">K♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">9♥</span> <span class="card-inline is-red">6♥</span> <span class="card-inline">3♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.42</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">88</td>
+        <td class="cards"><span class="card-inline">7♣</span> <span class="card-inline">J♣</span><span class="card-sep"> / </span><span class="card-inline">7♠</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♣</span> <span class="card-inline">6♣</span> <span class="card-inline">8♣</span></td>
+        <td class="play-cell">P · S · S</td>
+        <td class="num result is-loss">L <span>-2.00</span></td>
+        <td class="num ev-cell">+0.05</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">89</td>
+        <td class="cards"><span class="card-inline is-red">2♥</span> <span class="card-inline">Q♠</span> <span class="card-inline">5♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♦</span> <span class="card-inline">Q♣</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.38</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">90</td>
+        <td class="cards"><span class="card-inline">10♠</span> <span class="card-inline is-red">K♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">Q♥</span> <span class="card-inline">Q♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.55</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">91</td>
+        <td class="cards"><span class="card-inline">A♣</span> <span class="card-inline">K♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">4♣</span> <span class="card-inline">K♣</span></td>
+        <td class="play-cell">—</td>
+        <td class="num result is-win">W <span>+1.50</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">—</td>
+      </tr>
+      <tr>
+        <td class="num">92</td>
+        <td class="cards"><span class="card-inline">5♣</span> <span class="card-inline is-red">5♥</span> <span class="card-inline is-red">5♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">3♦</span> <span class="card-inline is-red">4♦</span> <span class="card-inline">2♣</span> <span class="card-inline is-red">A♥</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-loss">L <span>-2.00</span></td>
+        <td class="num ev-cell">+0.41</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">93</td>
+        <td class="cards"><span class="card-inline">4♠</span> <span class="card-inline is-red">10♥</span> <span class="card-inline">5♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♥</span> <span class="card-inline is-red">3♥</span> <span class="card-inline">K♠</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.47</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">94</td>
+        <td class="cards"><span class="card-inline">4♠</span> <span class="card-inline">A♠</span> <span class="card-inline is-red">9♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♣</span> <span class="card-inline is-red">A♥</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-loss">L <span>-2.00</span></td>
+        <td class="num ev-cell">+0.18</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">95</td>
+        <td class="cards"><span class="card-inline is-red">A♦</span> <span class="card-inline">5♣</span> <span class="card-inline">2♠</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">7♥</span> <span class="card-inline is-red">10♥</span></td>
+        <td class="play-cell">H · S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.00</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">96</td>
+        <td class="cards"><span class="card-inline is-red">7♦</span> <span class="card-inline">3♣</span> <span class="card-inline is-red">10♦</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">6♣</span> <span class="card-inline is-red">4♦</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="play-cell">D</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">+0.58</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">97</td>
+        <td class="cards"><span class="card-inline">9♠</span> <span class="card-inline is-red">5♦</span> <span class="card-inline">5♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">A♥</span> <span class="card-inline">7♠</span></td>
+        <td class="play-cell">I · H · S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">-0.44</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">98</td>
+        <td class="cards"><span class="card-inline is-red">Q♦</span> <span class="card-inline">10♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">2♦</span> <span class="card-inline">5♠</span> <span class="card-inline">5♠</span> <span class="card-inline">2♣</span> <span class="card-inline">J♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-win">W <span>+1.00</span></td>
+        <td class="num ev-cell">+0.64</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">99</td>
+        <td class="cards"><span class="card-inline">9♠</span> <span class="card-inline is-red">K♥</span></td>
+        <td class="cards dealer-cards"><span class="card-inline">3♠</span> <span class="card-inline">10♣</span> <span class="card-inline">6♣</span></td>
+        <td class="play-cell">S</td>
+        <td class="num result is-push">P <span>+0.00</span></td>
+        <td class="num ev-cell">—</td>
+        <td class="grade-cell">✓</td>
+      </tr>
+      <tr>
+        <td class="num">100</td>
+        <td class="cards"><span class="card-inline is-red">6♥</span> <span class="card-inline is-red">Q♥</span> <span class="card-inline">K♣</span></td>
+        <td class="cards dealer-cards"><span class="card-inline is-red">K♦</span> <span class="card-inline">8♣</span></td>
+        <td class="play-cell">H</td>
+        <td class="num result is-loss">L <span>-1.00</span></td>
+        <td class="num ev-cell">-0.54</td>
+        <td class="grade-cell">✓</td>
+      </tr></tbody>
+    </table>
+    <div class="log-foot"></div>
+    
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>07</span>
+    </footer>
+  </section>
+  
+<section class="page method-page">
+  
+    <header class="page-head">
+      <span>BLACKJACK LAB <i>/</i> SESSION 001</span>
+      <span>METHOD & CAVEATS</span>
+    </header>
+  <p class="eyebrow">HOW THIS WAS PLAYED</p>
+  <h2 class="section-title">Reproducible,<br><em>not prophetic.</em></h2>
+  <p class="lede">This is a headless session through the same <code>PlayGame</code> engine that powers the playable table, not a hand-typed sequence. The seed fixes every shuffle and every draw.</p>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <h3>Rules</h3>
+      <table class="rules-table"><tbody>
+        <tr><th>Decks</th><td>6</td></tr>
+        <tr><th>Dealer</th><td>Stands on soft 17</td></tr>
+        <tr><th>Blackjack</th><td>3:2</td></tr>
+        <tr><th>Double</th><td>Any two · after split</td></tr>
+        <tr><th>Splits</th><td>Up to 4 hands · aces one card</td></tr>
+        <tr><th>Surrender</th><td>None</td></tr>
+        <tr><th>Dealer peek</th><td>US peek</td></tr>
+        <tr><th>Insurance</th><td>Offered</td></tr>
+      </tbody></table>
+    </div>
+    <div class="method-card">
+      <h3>Session</h3>
+      <table class="rules-table"><tbody>
+        <tr><th>Seed</th><td>20261029</td></tr>
+        <tr><th>Bankroll</th><td>200.00 units</td></tr>
+        <tr><th>Bet</th><td>1 unit, flat</td></tr>
+        <tr><th>Penetration</th><td>75%</td></tr>
+        <tr><th>Strategy</th><td>Total-dependent chart</td></tr>
+        <tr><th>Insurance</th><td>Take when ten density makes EV ≥ 0</td></tr>
+        <tr><th>Grading</th><td>Chart EV for the chosen action</td></tr>
+        <tr><th>Code</th><td>6e0fc28</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="method-columns">
+    <div class="method-copy">
+      <h3>What is exact</h3>
+      <p>Dealer distributions and action EVs are exact for their composition. The 0.426% fresh-shoe edge is the composition-aware fixed-strategy solve; its split EV uses the infinite-deck approximation below.</p>
+      <p>The 100,000-hand reference uses the same play engine and policy. Its win/loss/push rates and 1.153-unit standard deviation are the long-run baseline used on the previous pages.</p>
+    </div>
+    <div class="method-copy">
+      <h3>What is approximated</h3>
+      <p>Split EV uses the documented independent-hand approximation. The chart is total-dependent, not composition-dependent. The insurance grade uses the unseen ten density with the hole card treated as one unseen card, not a peek.</p>
+      <p>The play engine settles the real shoe composition, but the coach’s EV is chart-based.</p>
+    </div>
+  </div>
+
+  <div class="method-copy proof-copy">
+    <h3>What this does not prove</h3>
+    <p>One hundred rounds cannot distinguish a 0.426% edge from zero. The coach ledger is not the whole table: 85 graded rounds expected -1.21 and returned -6.00; the other 15 settled before a grade and returned +6.00. Those pieces reconcile to +0.00.</p>
+  </div>
+
+  <div class="reproduce">
+    <span class="callout-kicker">REPRODUCE IT</span>
+    <code>node reports/build-blackjack-report.mjs</code>
+    <p>The script writes the session JSON, this HTML, and the PDF. The reference seed is 8675309; the session seed is 20261029.</p>
+  </div>
+
+  <div class="closing">
+    <p class="closing-kicker">THE LAST WORD</p>
+    <p>One hundred hands, zero mistakes, zero units. The chart did its job; the cards simply refused to make a story out of it.</p>
+  </div>
+  
+    <footer class="page-foot">
+      <span>100 HANDS AGAINST THE HOUSE · SEED 20261029</span>
+      <span>08</span>
+    </footer>
+</section>
+</body>
+</html>

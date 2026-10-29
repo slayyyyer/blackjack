@@ -35,7 +35,25 @@ python3 -m http.server 8080
 # or, if the project scripts are installed: npm run serve
 ```
 
-There is nothing to install or build. `package.json` exists only for the `test` and `serve` scripts.
+There is nothing to install or build. `package.json` exists only for the development scripts.
+
+## Reports
+
+Rebuild the four report PDFs in order and verify that their nested totals agree:
+
+```bash
+npm run reports
+```
+
+This runs the 100-hand session, the 100,000-round report, the 1,000,000-round report, and the 10,000,000-round report from their own seeds. It then checks that the 100k prefix in the 1M and 10M runs matches the 100k report, that the 1M midpoint matches the 1M report, and that the session's 100k baseline matches the 100k report. Any mismatch exits non-zero. Outputs are written to `reports/` as HTML, JSON, and PDF.
+
+To check the JSON files already in `reports/` without rebuilding the PDFs:
+
+```bash
+npm run reports -- --verify-only
+```
+
+This runs the same nested-total checks and exits non-zero on a mismatch or missing file. It does not write anything.
 
 ## Tests
 

@@ -6,6 +6,7 @@
   "description": "Static blackjack solver, simulator, counting trainer, and play table.",
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "reports": "node reports/build-all-reports.mjs",
     "serve": "python3 -m http.server 8080"
   }
 }

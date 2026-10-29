@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-10-29T14:54:54.235Z",
+  "exactEdge": 0.4256117525189681,
+  "exactNote": "Fresh-shoe fixed-chart solve, no insurance, infinite-deck split approximation.",
+  "config": {
+    "rounds": 10000000,
+    "penetration": 0.75,
+    "fresh": false,
+    "insuranceMode": "optimal",
+    "tenDensityMode": "current",
+    "seeds": [
+      8675309
+    ]
+  },
+  "results": [
+    {
+      "seed": 8675309,
+      "rounds": 10000000,
+      "hands": 10278347,
+      "fresh": false,
+      "penetration": 0.75,
+      "insuranceMode": "optimal",
+      "tenDensityMode": "current",
+      "net": -51802.5,
+      "edge": 0.518025,
+      "ciLow": 0.44663765025204005,
+      "ciHigh": 0.5894123497479599,
+      "width": 0.14277469949591975,
+      "sd": 1.151768476156124,
+      "se": 0.00036422117218346873,
+      "z": -2.537283786305555,
+      "mainNet": -43846.5,
+      "mainEdge": 0.43846500000000005,
+      "mainCiLow": 0.3670849985937755,
+      "mainCiHigh": 0.5098450014062246,
+      "mainZ": -0.3529330984382095,
+      "insuranceNet": -7956,
+      "insuranceEdge": 0.07956,
+      "insuranceEVSum": -29448.147171944624,
+      "insuranceTakeEVSum": 1970.7400521084921,
+      "insuranceExpectedEdge": -0.01970740052108492,
+      "insuranceExpectedNet": 1970.7400521084921,
+      "insuranceWins": 22262,
+      "insuranceLosses": 60436,
+      "insuranceActualWinRate": 0.2691963529952357,
+      "insuranceOffers": 733531,
+      "insuranceTaken": 82698,
+      "insuranceTakeRate": 0.11273961155015944,
+      "wins": 4333929,
+      "losses": 4771522,
+      "pushes": 894549,
+      "winRate": 0.4333929,
+      "lossRate": 0.4771522,
+      "pushRate": 0.0894549,
+      "shoeRounds": 0,
+      "freshShoeRounds": 0,
+      "ms": 30820
+    }
+  ]
+}
