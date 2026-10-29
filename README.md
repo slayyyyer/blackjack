@@ -51,7 +51,8 @@ Node 20+ recommended. The suite has no dependencies and runs the engine and solv
 - exact infinite-deck dealer distributions, normalization, naturals, bust rates, and peek conditioning;
 - published Wizard-of-Odds infinite-deck EVs and a standard S17/DAS basic-strategy chart;
 - the house edge (0.5117% for the default infinite-deck rules) and the direction/magnitude of rule changes;
-- the exact four H17 strategy flips and the rule-diff output.
+- the exact four H17 strategy flips and the rule-diff output;
+- deterministic headless play sessions, chosen-action expected net, bet-size weighting, and insurance grading.
 
 ## What is in each tab
 
@@ -200,7 +201,7 @@ These are deliberate, visible in the UI where relevant, and stated here so resul
 5. **Count edges are representative compositions.** A true count does not determine a unique shoe. The edge curve uses one plausible composition per count at the chosen penetration, so the curve is a composition model, not an average over every shoe with that count. Different penetrations shift it slightly.
 6. **Index thresholds are composition-specific.** They are derived at the representative holding shown, with the split approximation where pairs are involved. A different composition can move a threshold by a fraction of a true count. Rows that exceed the node budget are reported as budget-limited rather than guessed.
 7. **The simulation's "with deviations" strategy uses a fixed standard table** (Illustrious-18-style), not the solver-derived thresholds. The Index lab shows the derived and standard values side by side; the two are not automatically swapped into the simulation.
-8. **Insurance does not change the chart or the house edge.** Taking insurance is never the EV-maximizing action for a basic-strategy player, so the optimal edge is the same whether or not it is offered. Play mode offers it and settles it correctly.
+8. **Insurance does not change the chart or the house edge.** Taking insurance is never the EV-maximizing action for a basic-strategy player, so the optimal edge is the same whether or not it is offered. Play mode offers and grades it using the unseen ten density (0.5 × (3t − 1) per main-bet unit). The hole card is treated as one unseen card at that density, so this is a count-based estimate, not a peek.
 9. **Only late surrender is modeled**, and only when the dealer peeks. Early surrender, surrender after a split, and surrender in ENHC are not supported.
 10. **No other rule variants.** No 5-card Charlie, no 6-card bonuses, no dealer 22 push, no double on fewer than two cards, no "double only 10/11" restriction, no side bets, and no continuous shuffler.
 11. **Split depth is capped at four hands.** This matches the UI and keeps the recursion finite. A table with a higher resplit limit is not modeled.

@@ -10,6 +10,10 @@ import {
   formatNumber,
 } from './format.js';
 
+// Chart EVs at a finite composition can differ from the total-dependent chart
+// by a few thousandths. Treat gaps below this as ties rather than errors.
+const NEAR_TIE_EV = 0.005;
+
 const ACTION_BUTTONS = [
   { id: 'hit', letter: 'H', label: 'Hit', key: 'h' },
   { id: 'stand', letter: 'S', label: 'Stand', key: 's' },
@@ -235,7 +239,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
             <div><span>Expected net</span><strong id="stats-expected">—</strong></div>
             <div><span>Luck</span><strong id="stats-luck">—</strong></div>
           </div>
-          <p class="fine-print" id="stats-luck-note">Expected net covers graded rounds only; luck is actual minus expected.</p>
+          <p class="fine-print" id="stats-luck-note">Expected net uses the action you chose on graded rounds; luck is actual minus expected.</p>
         </section>
 
         <section class="control-card session-card" aria-labelledby="session-title">
@@ -343,6 +347,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   let hintToken = 0;
   let hintKey = null;
   let autoHintKey = null;
+  let hintSolving = false;
   const solverCache = new Map();
 
   function createGame(overrides = {}) {
@@ -356,12 +361,21 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
     });
   }
 
+  function setHintSolving(solving) {
+    hintSolving = solving;
+    els.actions.toggleAttribute('inert', solving);
+    els.actions.setAttribute('aria-busy', solving ? 'true' : 'false');
+    if (solving) els.hintBox.dataset.best = '';
+  }
+
   function clearCoaching() {
     hintToken++;
     lastGrade = null;
     lastHint = null;
     hintKey = null;
     autoHintKey = null;
+    setHintSolving(false);
+    delete els.hintBox.dataset.best;
     els.hintBox.hidden = true;
     els.gradeBox.hidden = true;
     els.hintContent.innerHTML = '';
@@ -468,7 +482,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
     els.statsSeed.textContent = `seed ${game.seed}`;
     els.statsRounds.textContent = formatNumber(stats.rounds);
     els.statsAccuracy.textContent = stats.accuracy == null ? '—' : `${(stats.accuracy * 100).toFixed(1)}%`;
-    els.statsEvLost.textContent = stats.decisions > 0 ? `${formatEV(stats.evLost)} bets` : '—';
+    els.statsEvLost.textContent = stats.decisions > 0 ? `${formatEV(stats.evLost)} units` : '—';
     els.statsActual.textContent = `${stats.actualNet >= 0 ? '+' : ''}${stats.actualNet.toFixed(2)}`;
     if (stats.expectedCount > 0) {
       els.statsExpected.textContent = `${stats.expectedNet >= 0 ? '+' : ''}${stats.expectedNet.toFixed(2)}`;
@@ -587,6 +601,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
     if (auto && autoHintKey === key) return;
     autoHintKey = key;
     const token = ++hintToken;
+    setHintSolving(true);
     lastHint = { html: '<span class="coach-value">Solving…</span>' };
     renderCoaching();
     let result = null;
@@ -594,7 +609,11 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
       result = await resultForSnapshot(snapshot);
     }
     if (token !== hintToken || game.phase !== 'player') return;
+    setHintSolving(false);
     const basic = result?.best ? null : basicBest(snapshot);
+    // Expose the answer for automation and tests without parsing the label;
+    // the literal text "Solving…" starts with S, which is also Stand.
+    els.hintBox.dataset.best = result?.best ?? basic ?? '';
     lastHint = {
       key,
       html: hintHtml(snapshot, result, basic),
@@ -616,6 +635,13 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   function gradeHtml(decision) {
     if (!decision.graded) {
       return '<span class="coach-value">Coach was off; this decision was not graded.</span>';
+    }
+    if (decision.mode === 'insurance') {
+      const evText = `${decision.insuranceEV >= 0 ? '+' : ''}${decision.insuranceEV.toFixed(3)} units per bet`;
+      if (decision.correct) {
+        return `<span class="grade-ok">${decision.actionName}: insurance EV ${evText}.</span>`;
+      }
+      return `<span class="grade-miss">${decision.actionName} cost ${decision.evLost.toFixed(3)} units per bet.</span> <span class="coach-value">Insurance EV was ${evText}.</span>`;
     }
     if (decision.mode === 'basic') {
       return decision.correct
@@ -667,9 +693,10 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
     const bestEV = result?.ev ?? null;
     const evLost = result && actionEV != null && bestEV != null ? Math.max(0, bestEV - actionEV) : null;
     const correct = result?.best
-      ? (result.best === chosenLetter || (evLost != null && evLost < 0.001))
+      ? (result.best === chosenLetter || (evLost != null && evLost < NEAR_TIE_EV))
       : (bestLetter ? bestLetter === chosenLetter : false);
     const decision = {
+      firstAction: snapshot?.actionIndex === 0,
       action,
       actionLetter: chosenLetter,
       actionName: actionName(chosenLetter),
@@ -697,7 +724,7 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   }
 
   function performAction(action) {
-    if (game.phase !== 'player') return;
+    if (hintSolving || game.phase !== 'player') return;
     const snapshot = game.snapshotForCoach();
     if (!snapshot || !game.act(action)) return;
     const seq = ++decisionSeq;
@@ -755,14 +782,21 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   els.actionButtons.forEach((button) => {
     button.addEventListener('click', () => performAction(button.dataset.playAction));
   });
-  els.insuranceTake.addEventListener('click', () => {
-    game.takeInsurance();
+  function resolveInsurance(taken) {
+    const decision = game.insuranceDecision(taken);
+    if (!decision) return;
+    const graded = coachMode !== 'off';
+    game.logDecision(decision.roundId, { ...decision, graded });
+    if (graded) {
+      lastGrade = { html: gradeHtml(decision), decision };
+    }
+    if (taken) game.takeInsurance();
+    else game.declineInsurance();
     render();
-  });
-  els.insuranceDecline.addEventListener('click', () => {
-    game.declineInsurance();
-    render();
-  });
+  }
+
+  els.insuranceTake.addEventListener('click', () => resolveInsurance(true));
+  els.insuranceDecline.addEventListener('click', () => resolveInsurance(false));
   els.deal.addEventListener('click', dealOrNext);
   els.newShoe.addEventListener('click', () => {
     if (game.phase === 'bet' || game.phase === 'settled') {
@@ -788,11 +822,15 @@ export function mountPlayView({ root, getRules, getChart, getCountSystem, onCoun
   });
   els.coachMode.addEventListener('change', () => {
     coachMode = els.coachMode.value;
+    hintToken++;
+    setHintSolving(false);
     lastHint = null;
     autoHintKey = null;
     render();
   });
   els.countAware.addEventListener('change', () => {
+    hintToken++;
+    setHintSolving(false);
     lastHint = null;
     autoHintKey = null;
     render();

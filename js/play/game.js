@@ -255,6 +255,7 @@ export class PlayGame {
       insuranceTaken: null,
       unitNet: 0,
       net: 0,
+      actionsTaken: 0,
       expectedEV: null,
       expectedCounted: false,
       note: '',
@@ -405,6 +406,11 @@ export class PlayGame {
     if (!hand) return false;
     this.round.lastAction = action;
 
+    // Count actions, not log entries: grading is asynchronous and two split
+    // hands can finish out of order. The first action in the round is the only
+    // one whose EV represents the round's initial expectation.
+    this.round.actionsTaken = (this.round.actionsTaken ?? 0) + 1;
+
     if (action === 'hit') {
       this.addCard(hand, this.draw());
       hand.canSurrender = false;
@@ -534,7 +540,10 @@ export class PlayGame {
       this.round.insuranceNet = dealer.blackjack ? this.round.insuranceBet * 2 : -this.round.insuranceBet;
     }
 
-    const cashNet = unitNet * this.bet;
+    // Settlement follows the wager that was actually made for this round.
+    // The live `this.bet` may already have been edited for the next deal while
+    // an asynchronous coach grade is still in flight.
+    const cashNet = unitNet * this.round.bet;
     this.round.unitNet = unitNet;
     this.round.net = cashNet;
     this.round.note = note;
@@ -641,6 +650,7 @@ export class PlayGame {
       roundId: this.round.id,
       handIndex: index,
       handLabel: `Hand ${index + 1}`,
+      actionIndex: this.round.actionsTaken ?? 0,
       cards: hand.cards.map((c) => ({ ...c })),
       upcard: { ...upcard },
       counts,
@@ -662,24 +672,111 @@ export class PlayGame {
     };
   }
 
+  /**
+   * Ten-value density among the cards still unseen at the insurance decision.
+   * The hole card is not revealed yet, so it is treated as one unseen card at
+   * the shoe's current ten density. This is the standard count-based estimate,
+   * not a peek at the hole card.
+   */
+  tenDensity() {
+    if (this.infinite) return 4 / 13;
+    const unseen = this.cardsLeftUnseen();
+    if (!Number.isFinite(unseen) || unseen <= 0) return 4 / 13;
+    return this.counts[8] / unseen;
+  }
+
+  /**
+   * EV of taking insurance, per unit of the main bet. Insurance costs half a
+   * unit and pays 2:1 when the dealer has blackjack: EV = 0.5 * (3t - 1).
+   */
+  insuranceEV() {
+    if (this.phase !== 'insurance' || !this.round) return null;
+    const t = this.tenDensity();
+    return 0.5 * (3 * t - 1);
+  }
+
+  /**
+   * Grade the insurance decision before the hole card is revealed. Both taking
+   * and declining are legal; the better side depends on whether taking has a
+   * non-negative EV. Returned EV values are per unit of the main bet.
+   */
+  insuranceDecision(taken) {
+    const ev = this.insuranceEV();
+    if (ev == null) return null;
+    const correct = taken ? ev >= 0 : ev <= 0;
+    return {
+      roundId: this.round.id,
+      action: 'insurance',
+      actionLetter: null,
+      actionName: taken ? 'Take insurance' : 'No insurance',
+      actionEV: taken ? ev : 0,
+      best: ev >= 0 ? 'insurance' : 'no-insurance',
+      bestLetter: null,
+      bestName: ev >= 0 ? 'Take insurance' : 'No insurance',
+      bestEV: Math.max(ev, 0),
+      evLost: correct ? 0 : Math.abs(ev),
+      correct,
+      graded: true,
+      mode: 'insurance',
+      isInsurance: true,
+      insuranceEV: ev,
+      trueCount: this.trueCount(),
+      runningCount: this.runningCount,
+      cards: [],
+      upcard: this.round.dealer?.upcard?.rank ?? 'A',
+      hand: 'Insurance',
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  /**
+   * Recompute this round's expectation after adding a graded decision. The
+   * expectation is based on the action that was actually chosen, not the best
+   * action, so luck = actual - expected never absorbs the cost of mistakes.
+   * Insurance is additive and is included when it was offered and graded.
+   */
+  syncExpected(round) {
+    const insuranceEV = Number.isFinite(round.insuranceExpectedEV)
+      ? round.insuranceExpectedEV
+      : null;
+    const actionEV = Number.isFinite(round.actionExpectedEV)
+      ? round.actionExpectedEV
+      : null;
+    if (insuranceEV == null && actionEV == null) return;
+
+    const next = ((actionEV ?? 0) + (insuranceEV ?? 0)) * round.bet;
+    if (round.expectedEV == null) {
+      this.stats.expectedCount++;
+    } else {
+      this.stats.expectedNet -= round.expectedEV;
+    }
+    round.expectedEV = next;
+    this.stats.expectedNet += next;
+
+    if (round.endedAt && !round.expectedCounted) {
+      this.stats.expectedActualNet += round.net;
+      round.expectedCounted = true;
+    }
+  }
+
   logDecision(roundId, decision) {
     const round = this.round?.id === roundId ? this.round : this.history.find((r) => r.id === roundId);
     if (!round) return false;
-    const wasFirst = round.decisions.length === 0;
+    const firstAction = decision.firstAction
+      ?? !round.decisions.some((d) => d.graded && !d.isInsurance);
     round.decisions.push(decision);
     if (decision.graded) {
       this.stats.decisions++;
       if (decision.correct) this.stats.correct++;
-      if (Number.isFinite(decision.evLost)) this.stats.evLost += decision.evLost;
-      if (wasFirst && Number.isFinite(decision.bestEV)) {
-        round.expectedEV = decision.bestEV * this.bet;
-        this.stats.expectedNet += round.expectedEV;
-        this.stats.expectedCount++;
-        if (round.endedAt && !round.expectedCounted) {
-          this.stats.expectedActualNet += round.net;
-          round.expectedCounted = true;
-        }
+      // Decision EVs are per unit; the session total is in units of the bet
+      // actually at risk for this round.
+      if (Number.isFinite(decision.evLost)) this.stats.evLost += decision.evLost * round.bet;
+      if (decision.isInsurance) {
+        round.insuranceExpectedEV = decision.actionEV;
+      } else if (firstAction && Number.isFinite(decision.actionEV)) {
+        round.actionExpectedEV = decision.actionEV;
       }
+      this.syncExpected(round);
     }
     return true;
   }
