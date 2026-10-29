@@ -58,6 +58,8 @@ export class PlayGame {
     this.needsShuffle = false;
     this.runningCount = 0;
     this.unrevealed = 0;
+    this.seenCards = 0;
+    this.seenTens = 0;
     this.phase = 'bet';
     this.round = null;
     this.history = [];
@@ -95,7 +97,20 @@ export class PlayGame {
       this.runningCount = 0;
       this.unrevealed = 0;
     }
+    this.seenCards = 0;
+    this.seenTens = 0;
     this.message = initial ? 'New shoe ready. Place a bet.' : `Shoe ${this.shoeNumber} shuffled.`;
+  }
+
+  /**
+   * Account for a card whose face is now visible to the player. The running
+   * count and the insurance density must be built from the same information:
+   * cards the player has actually seen. A hidden hole card is not passed here.
+   */
+  recordVisible(bucket) {
+    this.seenCards++;
+    if (bucket === 10) this.seenTens++;
+    this.runningCount += countValue(this.countSystem, bucket);
   }
 
   cardsLeftUnseen() {
@@ -151,7 +166,7 @@ export class PlayGame {
       return this.draw(visible);
     }
     if (visible) {
-      this.runningCount += countValue(this.countSystem, bucket);
+      this.recordVisible(bucket);
     } else {
       this.unrevealed++;
     }
@@ -161,7 +176,7 @@ export class PlayGame {
   revealHole() {
     if (!this.round?.dealer?.holeHidden) return;
     this.round.dealer.holeHidden = false;
-    this.runningCount += countValue(this.countSystem, this.round.dealer.hole.bucket);
+    this.recordVisible(this.round.dealer.hole.bucket);
     this.unrevealed = Math.max(0, this.unrevealed - 1);
   }
 
@@ -674,15 +689,24 @@ export class PlayGame {
 
   /**
    * Ten-value density among the cards still unseen at the insurance decision.
-   * The hole card is not revealed yet, so it is treated as one unseen card at
-   * the shoe's current ten density. This is the standard count-based estimate,
-   * not a peek at the hole card.
+   *
+   * The hole card is one of those unseen cards. `counts` no longer contains
+   * it, so using `counts[8] / cardsLeftUnseen()` would condition the numerator
+   * on the hole while leaving it in the denominator. That biases the estimate
+   * downward exactly when the hole is a ten, which makes the 1/3 insurance
+   * threshold select the wrong hands.
+   *
+   * Instead, count only cards the player has actually seen. The numerator is
+   * the original number of tens minus the visible tens; the denominator is the
+   * original shoe size minus all visible cards, so the hidden hole stays in
+   * both the unseen set and the unknown-ten set.
    */
   tenDensity() {
     if (this.infinite) return 4 / 13;
-    const unseen = this.cardsLeftUnseen();
+    const decks = Number(this.rules.decks);
+    const unseen = 52 * decks - this.seenCards;
     if (!Number.isFinite(unseen) || unseen <= 0) return 4 / 13;
-    return this.counts[8] / unseen;
+    return (16 * decks - this.seenTens) / unseen;
   }
 
   /**
