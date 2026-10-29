@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b10">
+  <meta name="description" content="An exact, offline blackjack solver, simulator, card-counting lab, and play table.">
+  <title>Blackjack Lab — exact strategy, measured proof</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="app-header">
+    <a class="brand" href="./" aria-label="Blackjack Lab home">
+      <span class="brand-mark" aria-hidden="true">♠</span>
+      <span class="brand-copy">
+        <span class="brand-name">Blackjack Lab</span>
+        <span class="brand-tag">Exact strategy. Measured proof.</span>
+      </span>
+    </a>
+
+    <div class="header-right">
+      <div class="house-edge-card">
+        <span class="stat-label">House edge</span>
+        <strong id="house-edge" class="stat-value">—</strong>
+        <span id="house-edge-note" class="stat-note">Solving…</span>
+      </div>
+      <div id="rule-chips" class="rule-chips" aria-label="Current rule summary"></div>
+    </div>
+  </header>
+
+  <div class="tab-strip">
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" id="tab-strategy" role="tab" aria-controls="panel-strategy" aria-selected="true" data-tab="strategy">
+        <span class="tab-index">01</span><span>Strategy</span>
+      </button>
+      <button class="tab" id="tab-simulation" role="tab" aria-controls="panel-simulation" aria-selected="false" tabindex="-1" data-tab="simulation">
+        <span class="tab-index">02</span><span>Simulation</span>
+      </button>
+      <button class="tab" id="tab-counting" role="tab" aria-controls="panel-counting" aria-selected="false" tabindex="-1" data-tab="counting">
+        <span class="tab-index">03</span><span>Counting</span>
+      </button>
+      <button class="tab" id="tab-play" role="tab" aria-controls="panel-play" aria-selected="false" tabindex="-1" data-tab="play">
+        <span class="tab-index">04</span><span>Play</span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="app-layout">
+    <aside class="rules-panel" aria-label="Table rules">
+      <div id="rules-controls"></div>
+    </aside>
+
+    <main id="main-content" class="workspace">
+      <section id="panel-strategy" class="tab-panel" role="tabpanel" aria-labelledby="tab-strategy">
+        <div id="solver-status" class="solver-status" role="status" aria-live="polite" hidden></div>
+        <div id="diff-banner" class="diff-banner" role="status" aria-live="polite" hidden></div>
+
+        <section class="intro-card">
+          <div class="intro-copy">
+            <p class="eyebrow">Module 01 · exact solver</p>
+            <h1>The chart is the proof.</h1>
+            <p>Every cell is the EV-maximizing action for the rules at left. Change a rule and the solver re-derives the whole chart, the house edge, and the simulation target.</p>
+          </div>
+          <div class="intro-meta" aria-label="Solver model">
+            <div><span>Model</span><strong>Infinite deck</strong></div>
+            <div><span>Strategy</span><strong>Total-dependent</strong></div>
+            <div><span>Computation</span><strong id="solve-meta">Solving…</strong></div>
+          </div>
+        </section>
+
+        <div class="strategy-body">
+          <div id="strategy-charts"></div>
+          <section id="cell-detail" class="detail-card" aria-live="polite"></section>
+        </div>
+      </section>
+
+      <section id="panel-simulation" class="tab-panel placeholder-panel" role="tabpanel" aria-labelledby="tab-simulation" hidden>
+        <p class="eyebrow">Module 03 · proof by simulation</p>
+        <h1>Make the number move.</h1>
+        <p>The Monte Carlo worker will run up to 10 million hands against the solved strategy, draw a shrinking 95% confidence band, and compare six strategies on the same seed.</p>
+        <div class="placeholder-card">
+          <span class="placeholder-icon" aria-hidden="true">∿</span>
+          <strong>Simulation checkpoint</strong>
+          <span>The convergence chart lands here after the finite-shoe engine.</span>
+        </div>
+      </section>
+
+      <section id="panel-counting" class="tab-panel placeholder-panel" role="tabpanel" aria-labelledby="tab-counting" hidden>
+        <p class="eyebrow">Module 04 · card counting</p>
+        <h1>Count the shoe, not a feeling.</h1>
+        <p>Hi-Lo true count, solver-derived edge by count, a bet-ramp simulator with risk of ruin, index plays, and a speed trainer.</p>
+        <div class="placeholder-card">
+          <span class="placeholder-icon" aria-hidden="true">±</span>
+          <strong>Counting checkpoint</strong>
+          <span>The finite-shoe solver will feed this lab.</span>
+        </div>
+      </section>
+
+      <section id="panel-play" class="tab-panel placeholder-panel" role="tabpanel" aria-labelledby="tab-play" hidden>
+        <p class="eyebrow">Module 05 · play mode</p>
+        <h1>Sit down. Get graded.</h1>
+        <p>A real shoe with penetration and a cut card, a count-aware coach, EV lost per decision, and a session log you can export.</p>
+        <div class="placeholder-card">
+          <span class="placeholder-icon" aria-hidden="true">♠</span>
+          <strong>Play checkpoint</strong>
+          <span>The table and coach arrive after the solver and simulator.</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <span>No network calls, no analytics, no external assets.</span>
+    <span>Static ES modules · Canvas charts · Web Workers</span>
+  </footer>
+
+  <noscript>
+    <div class="noscript">This app needs JavaScript enabled. All computation is local.</div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

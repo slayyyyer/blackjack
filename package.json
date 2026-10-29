@@ -1,0 +1,11 @@
+{
+  "name": "blackjack-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static blackjack solver, simulator, counting trainer, and play table.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "serve": "python3 -m http.server 8080"
+  }
+}

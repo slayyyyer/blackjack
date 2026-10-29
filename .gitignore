@@ -1,0 +1,5 @@
+.freebuff/
+screenshots/
+.tools/
+node_modules/
+*.log
