@@ -32,7 +32,7 @@
 
   <div class="tab-strip">
     <nav class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" id="tab-strategy" role="tab" aria-controls="panel-strategy" aria-selected="true" data-tab="strategy">
+      <button class="tab" id="tab-strategy" role="tab" aria-controls="panel-strategy" aria-selected="false" tabindex="-1" data-tab="strategy">
         <span class="tab-index">01</span><span>Strategy</span>
       </button>
       <button class="tab" id="tab-simulation" role="tab" aria-controls="panel-simulation" aria-selected="false" tabindex="-1" data-tab="simulation">
@@ -41,7 +41,7 @@
       <button class="tab" id="tab-counting" role="tab" aria-controls="panel-counting" aria-selected="false" tabindex="-1" data-tab="counting">
         <span class="tab-index">03</span><span>Counting</span>
       </button>
-      <button class="tab" id="tab-play" role="tab" aria-controls="panel-play" aria-selected="false" tabindex="-1" data-tab="play">
+      <button class="tab" id="tab-play" role="tab" aria-controls="panel-play" aria-selected="true" data-tab="play">
         <span class="tab-index">04</span><span>Play</span>
       </button>
     </nav>
@@ -53,7 +53,7 @@
     </aside>
 
     <main id="main-content" class="workspace">
-      <section id="panel-strategy" class="tab-panel" role="tabpanel" aria-labelledby="tab-strategy">
+      <section id="panel-strategy" class="tab-panel" role="tabpanel" aria-labelledby="tab-strategy" hidden>
         <div id="solver-status" class="solver-status" role="status" aria-live="polite" hidden></div>
         <div id="diff-banner" class="diff-banner" role="status" aria-live="polite" hidden></div>
 
@@ -98,7 +98,7 @@
         </div>
       </section>
 
-      <section id="panel-play" class="tab-panel placeholder-panel" role="tabpanel" aria-labelledby="tab-play" hidden>
+      <section id="panel-play" class="tab-panel placeholder-panel" role="tabpanel" aria-labelledby="tab-play">
         <p class="eyebrow">Module 05 · play mode</p>
         <h1>Sit down. Get graded.</h1>
         <p>A real shoe with penetration and a cut card, a count-aware coach, EV lost per decision, and a session log you can export.</p>

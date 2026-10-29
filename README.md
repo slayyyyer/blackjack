@@ -20,6 +20,8 @@ node tools/serve.mjs 8080
 # open http://127.0.0.1:8080
 ```
 
+The site opens on the playable table. Set a bet and press **Deal**; the strategy, simulation, and counting tools are the other tabs.
+
 `tools/serve.mjs` is a dependency-free development server included in the repo. It accepts an optional root directory and port:
 
 ```bash
