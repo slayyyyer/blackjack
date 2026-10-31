@@ -10,6 +10,12 @@ No backend, no framework, no build step, no CDN, no analytics. HTML, CSS, Canvas
 - **Counting lab** — solver-derived edge-by-true-count curve, bet-ramp and risk-of-ruin simulation, index thresholds, a Hi-Lo quality scatter, and a speed trainer.
 - **Play mode** — a real shoe with a cut card and penetration, a coach that prices every decision in bets, session stats, and JSON export.
 
+**Live site:** <https://slayyyyer.github.io/blackjack/>
+
+![The play table: player cards, dealer upcard, coach panel, count, and session stats](screenshots/live-table-cards.png)
+
+*The playable table. Every decision is graded against the solver, with the EV cost shown in bets.*
+
 ## Quick start
 
 You need a modern browser and any static HTTP server. ES modules and module workers do not load from `file://`.
@@ -45,7 +51,16 @@ Rebuild the four report PDFs in order and verify that their nested totals agree:
 npm run reports
 ```
 
-This runs the 100-hand session, the 100,000-round report, the 1,000,000-round report, and the 10,000,000-round report from their own seeds. It then checks that the 100k prefix in the 1M and 10M runs matches the 100k report, that the 1M midpoint matches the 1M report, and that the session's 100k baseline matches the 100k report. Any mismatch exits non-zero. Outputs are written to `reports/` as HTML, JSON, and PDF.
+This runs the 100-hand session, the 100,000-round report, the 1,000,000-round report, and the 10,000,000-round report from their own seeds. It then checks that the 100k prefix in the 1M and 10M runs matches the 100k report, that the 1M midpoint matches the 1M report, and that the session's 100k baseline matches the 100k report. Any mismatch exits non-zero.
+
+| Report | Rounds | Outputs |
+| --- | ---: | --- |
+| 100-hand session | 100 | [PDF](reports/blackjack-100-rounds.pdf) · [HTML](reports/blackjack-100-rounds.html) · [JSON](reports/blackjack-100-rounds.json) |
+| Abridged convergence report | 100,000 | [PDF](reports/blackjack-100k.pdf) · [HTML](reports/blackjack-100k.html) · [JSON](reports/blackjack-100k.json) |
+| Million-round report | 1,000,000 | [PDF](reports/blackjack-1m.pdf) · [HTML](reports/blackjack-1m.html) · [JSON](reports/blackjack-1m.json) |
+| Ten-million-round report | 10,000,000 | [PDF](reports/blackjack-10m.pdf) · [HTML](reports/blackjack-10m.html) · [JSON](reports/blackjack-10m.json) |
+
+The 10M report includes the investigation of the gap between its measured fresh-shoe result and the exact reference in [blackjack-10m-gap-investigation.md](reports/blackjack-10m-gap-investigation.md).
 
 To check the JSON files already in `reports/` without rebuilding the PDFs:
 
@@ -192,8 +207,11 @@ js/
   play/                    play-table state machine and settlement
   workers/                 solver, simulation, and counting workers plus clients
   ui/                      rules panel, tabs, charts, and the four tab views
+reports/                   generated session and simulation reports (HTML, JSON, PDF)
+screenshots/               README screenshots
 tests/                     Node test runner suites
 tools/serve.mjs            dependency-free static server
+tools/pages-smoke.mjs      Playwright smoke test for the deployed site
 ```
 
 Engine, solver, simulator, counting, and play logic are DOM-free. Only `js/ui`, `js/workers`, and `js/main.js` touch the browser.
